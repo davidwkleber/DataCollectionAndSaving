@@ -1,0 +1,144 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Guages</title>
+<link rel="stylesheet" href="../stylesheets/style.css">
+  <style>
+  input, label {
+    line-height: 1.5em;
+  }
+  </style>
+<style>
+	.recordButtons {
+			position: absolute;
+			left: 1400px; top: 90px;
+		}
+
+</style>
+
+  </head>
+
+<body onLoad="recordDataFunction()">
+  	
+	<div class="recordButtonsDiv" name="recordButtonsDiv" id="recordButtonsDiv" >
+	</div>
+
+
+
+		<div class="recordButtons">
+			<fieldset id="recordButtonsSet">
+				<legend>Record and Save Data</legend>
+				<span>
+					<button class="recordButton" id="recordButton" name="recordButton" onclick="recordFunction()">Record</button> 
+				</span>
+				<span>
+				<button class="stopRecordButton" id="stopRecordButton" name="stopRecordButton" onclick="stopRecordFunction()">Stop</button> 
+				</span>
+				<span>
+				<button class="saveDataButton" id="saveDataButton" name="saveDataButton" onclick="saveDataFunction()">Save</button> 
+				</span>
+			<div id="selectedData"></div>
+
+	</fieldset>
+		<script>
+		var dataItem;
+		var recordedData;
+		var iosocket;
+		
+		
+			console.log('record');
+			recordedData = [];
+			var iosocket = io.connect('http://127.0.0.1:1337');
+
+			iosocket.on('connect', function (data) {
+					console.log('record client connected ');
+					console.log('record connected data ' + data);
+			
+				jQuery(function ($) {
+					iosocket.on('updateData', function (data) {
+					//	console.log('record update raw: ' + data);
+						dataItem = JSON.parse(data);
+					//	console.log('record updateData  ' + dataItem.power);
+						recordedData.push(data);
+					});	
+			
+				});
+			});	
+			function recordFunction() {
+		}
+		function stopRecordFunction() {
+			console.log('stop recording');
+			iosocket.disconnect();
+		}
+		
+		function saveDataFunction() {
+			console.log('save data');
+			console.log('recorded data saved: '+recordedData);
+		}
+		
+		
+		/*
+		var dataSelected = 'power';
+		
+			$( "input" ).on( "click", function() {
+
+	//		$("#selectedData").html($( "input:checked" ).val() + " is checked!" );
+						$("#lineGraphTitle").html($( "input:checked" ).val() );
+
+			 dataSelected = $("input:checked").val();
+			console.log('dataSelected item is: '+dataSelected);
+		});	
+						var dataItem;
+			var iosocket = io.connect('http://127.0.0.1:1337');
+
+			iosocket.on('connect', function (data) {
+					console.log('lineGraph client connected ');
+					console.log('lineGraph connected data ' + data);
+
+				
+			jQuery(function ($) {
+				iosocket.on('updateData', function (data) {
+					console.log('lineGraph update: ' + data);
+					dataItem = JSON.parse(data);
+					console.log('lineGraph updateData power ' + dataItem.power);
+
+					switch (dataSelected) {
+						case 'power':
+							console.log('graph power '+dataSelected);
+							tick( dataItem.power );
+							break;
+						case 'current':
+							console.log('graph current '+dataSelected);
+							tick( dataItem.current );
+							break;
+						case 'voltage':
+							console.log('graph voltage '+dataSelected);
+							tick( dataItem.voltage );
+							break;
+						case 'rpm':
+							var realRPM = Math.floor(((dataItem.rpm * 3.3)/1024)*1000); //*666.667);
+							console.log('graph rpm '+dataSelected);
+							tick( realRPM );
+							break;
+						default:
+							console.log('graph default');
+							tick( dataItem.power );
+					}
+				 
+				});
+			});
+		
+				});
+				
+	*/
+		</script>			
+					
+ 
+ 
+ 
+  </div>
+ 
+</body>
+</html>

@@ -62,42 +62,42 @@
 						$("#lineGraphTitle").html($( "input:checked" ).val() );
 
 			 dataSelected = $("input:checked").val();
-			console.log('dataSelected item is: '+dataSelected);
+		//	console.log('dataSelected item is: '+dataSelected);
 		});	
 						var dataItem;
 			var iosocket = io.connect('http://127.0.0.1:1337');
 
 			iosocket.on('connect', function (data) {
 					console.log('lineGraph client connected ');
-					console.log('lineGraph connected data ' + data);
+			//		console.log('lineGraph connected data ' + data);
 
 				
 			jQuery(function ($) {
 				iosocket.on('updateData', function (data) {
-					console.log('lineGraph update: ' + data);
+			//		console.log('lineGraph update: ' + data);
 					dataItem = JSON.parse(data);
-					console.log('lineGraph updateData power ' + dataItem.power);
+			//		console.log('lineGraph updateData power ' + dataItem.power);
 
 					switch (dataSelected) {
 						case 'power':
-							console.log('graph power '+dataSelected);
+			//				console.log('graph power '+dataSelected);
 							tick( dataItem.power );
 							break;
 						case 'current':
-							console.log('graph current '+dataSelected);
+			//				console.log('graph current '+dataSelected);
 							tick( dataItem.current );
 							break;
 						case 'voltage':
-							console.log('graph voltage '+dataSelected);
+			//				console.log('graph voltage '+dataSelected);
 							tick( dataItem.voltage );
 							break;
 						case 'rpm':
 							var realRPM = Math.floor(((dataItem.rpm * 3.3)/1024)*1000); //*666.667);
-							console.log('graph rpm '+dataSelected);
+			//				console.log('graph rpm '+dataSelected);
 							tick( realRPM );
 							break;
 						default:
-							console.log('graph default');
+			//				console.log('graph default');
 							tick( dataItem.power );
 					}
 				 
