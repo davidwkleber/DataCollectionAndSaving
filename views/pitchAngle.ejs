@@ -1,0 +1,238 @@
+
+<!doctype html>
+<html lang="en">
+    <head>
+
+        <meta charset="utf-8">
+        <title>Pitch Angle</title>
+
+        <style>
+
+        .pitchAngle-button {
+            display: block;
+            width: 280px;
+            height: 540px;
+            background: url("images/Pitch_final.png") no-repeat 0 0;
+            margin-bottom: 1em;
+           
+			position:absolute;
+			left:330px; top:315px;
+        }
+        .PAcurrentFrame {
+			position:absolute;
+			left:390px; top:105px;
+		}
+		
+		.PAcurrentAngle {
+			position:absolute;
+			left:340px; top:890px;
+		}
+		.PAbuttonDiv{
+			position:absolute;
+			left:340px; top:930px;
+		}
+		#PAupButton{
+			width:60px; height: 40px;
+		}
+		#PAdownButton{
+			width:60px; height: 40px;
+		}		
+		.pitchAngelDiv {
+			position:absolute;
+			left:330px; top:100px;
+		}
+     
+        </style>
+	
+
+    </head>
+    <body>
+	
+<div class=pitchAngleDiv>
+ <form name="pitchAngleForm" id"pitchAngleForm" class="pitchAngleForm" action="/pitchAngle" method="post">
+<title><%= title %></title>
+         <a class="pitchAngle-button"></a>
+		<p class="PAcurrentAngle" name="PAcurrentAngle" id="PAcurrentAngle">Pitch Angle: <span>1</span></p>
+	
+<div class="PAbuttonDiv">
+<span class="PAbuttons">
+ <button class="PAupButton" id="PAupButton" name="PAupButton" >/\</button>
+  <button class="PAdownButton" id="PAdownButton" >\/</button>
+ 
+  </span>
+</div>
+ 
+
+	<script src="demos/dist/spriteclip.js"></script>
+
+        <script>
+	
+		var hasTouch = (typeof TouchEvent !== "undefined");
+	// 	alert(hasTouch);
+		
+		var PAmouseIsDown = "false";
+		var PAframeToPlay = 1;
+		
+		//setup a variable to store our last position
+var PAlast_position = {},
+$PAoutput = $('#output');
+            //Instantiate and get the instance from the element's data-spriteClip property
+            var PAinstance = $(".pitchAngle-button").spriteClip({
+                totalFrames: 600,
+                frameRate: 60,
+                stops: [1, 600]
+            }).data("spriteClip");
+
+			
+            
+ //           PAinstance.$el
+				if (hasTouch) {
+					PAinstance.$el.on("touchstart", function () {
+ 						console.log('PA touch  down');
+						PAmouseIsDown = "true";
+                	})
+				} else {
+					PAinstance.$el.on("mousedown", function () {
+						console.log('PA mouse down');
+						PAmouseIsDown = "true";
+					})
+				}
+				
+			//	if (hasTouch) {
+			//	$(".awesome-button").on('touchmove', function (TouchEvent) {
+				PAinstance.$el.on('touchmove', function (TouchEvent) {	
+				
+			console.log('PAmouse move');
+					if ( PAmouseIsDown === "true" ) {
+//										console.log('PAmouseIsDown == true');
+
+						//check to make sure there is data to compare against
+						if (typeof(PAlast_position.x) != 'undefined' ) {
+							console.log('PAlast_position.x '+PAlast_position.x);
+							//get the change from last position to this position
+				
+							var PAdeltaX = PAlast_position.x - event.touches[0].clientX,
+								PAdeltaY = PAlast_position.y - event.touches[0].clientY;
+
+PAframeToPlay = PAframeToPlay + PAdeltaY;
+if 	(+PAframeToPlay > +600) PAframeToPlay = +600;		
+if 	(+PAframeToPlay < +1) PAframeToPlay = +1;	
+PAframeToPlay = Math.floor(+PAframeToPlay);	
+PAinstance.gotoAndStop(+PAframeToPlay);	
+
+						}
+					} else {
+//					console.log('PAmouseIsDown != true ');
+					}
+							//set the new last position to the current for next time
+					PAlast_position = {
+						x : event.touches[0].clientX,
+						y : event.touches[0].clientY
+					}
+            
+			}) 
+			/*
+			} else {
+				$(".awesome-button").on('mousemove', function (event) {
+				// PAinstance.$el.on("mousemove", function (event) {
+//					console.log('PAmouse move');
+					if ( PAmouseIsDown === "true" ) {
+//										console.log('PAmouseIsDown == true');
+
+						//check to make sure there is data to compare against
+						if (typeof(PAlast_position.x) != 'undefined' ) {
+//							console.log('PAlast_position.x '+PAlast_position.x);
+							//get the change from last position to this position
+				
+							var PAdeltaX = PAlast_position.x - event.clientX,
+								PAdeltaY = PAlast_position.y - event.clientY;
+
+PAframeToPlay = PAframeToPlay + PAdeltaY;
+if 	(PAframeToPlay > 600) PAframeToPlay = 600;		
+if 	(PAframeToPlay < 1) PAframeToPlay = 1;		
+PAinstance.gotoAndStop(PAframeToPlay);	
+
+						}
+					} else {
+//					console.log('PAmouseIsDown != true ');
+					}
+							//set the new last position to the current for next time
+					PAlast_position = {
+						x : event.clientX,
+						y : event.clientY
+					}
+            
+			}) } 
+			*/
+			if (hasTouch) {
+                PAinstance.$el.on("touchend", function () {
+					PAmouseIsDown = "false";
+                    PAinstance.stop();
+					event.preventDefault();
+					console.log('client pitchAngle: '+PAinstance.currentFrame);
+					var posting = $.post( '/pitchAngle', { pitchAngleValue: PAinstance.currentFrame } );
+					posting.done(function( data ) {
+						console.log('client pitchAngle post done ');
+					});
+                });
+			} else {
+			    PAinstance.$el.on("mouseup", function () {
+					PAmouseIsDown = "false";
+                    PAinstance.stop();
+					event.preventDefault();
+					console.log('client pitchAngle: '+PAinstance.currentFrame);
+					var posting = $.post( '/pitchAngle', { pitchAngleValue: PAinstance.currentFrame } );
+					posting.done(function( data ) {
+						console.log('client pitchAngle post done ');
+					});
+                });
+			}
+			
+            PAinstance.$dispatcher
+                .on(SpriteClip.Event.ENTER_FRAME, function (e, clip) {
+					var PAcurrentAngle = (PAinstance.currentFrame-100)/10;
+					$(".PAcurrentAngle span").text(PAcurrentAngle);
+                    $(".PAcurrentFrame span").text(PAinstance.currentFrame);
+                });
+				
+			$('#PAupButton').click(function(event){
+  					event.preventDefault();
+										console.log('client pitchAngle BUTTON: '+PAinstance.currentFrame);
+
+					PAinstance.currentFrame += 1;
+					console.log('client pitchAngle BUTTON: '+PAinstance.currentFrame);
+					
+					var posting = $.post( '/pitchAngle', { pitchAngleValue: PAinstance.currentFrame} );
+										var PAcurrentAngle = (PAinstance.currentFrame-100)/10;
+										
+					$(".PAcurrentAngle span").text(PAcurrentAngle);
+                    $(".PAcurrentFrame span").text(PAinstance.currentFrame);
+					PAinstance.nextFrame();
+					posting.done(function( data ) {
+						console.log('client pitchAngle post done ');
+					});
+				});
+			$('#PAdownButton').click(function(event){
+  					event.preventDefault();
+					PAinstance.currentFrame -= 1;
+					console.log('client pitchAngle BUTTON: '+PAinstance.currentFrame);
+					var posting = $.post( '/pitchAngle', { pitchAngleValue: PAinstance.currentFrame } );
+										var PAcurrentAngle = (PAinstance.currentFrame-100)/10;
+										
+									
+					$(".PAcurrentAngle span").text(PAcurrentAngle);
+                    $(".PAcurrentFrame span").text(PAinstance.currentFrame);
+					PAinstance.prevFrame();
+					posting.done(function( data ) {
+						console.log('client pitchAngle post done ');
+					});
+				});
+        </script>
+		
+ </form>
+
+ 
+
+</div>
+    </body>
+</html>

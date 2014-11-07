@@ -1,0 +1,68 @@
+
+<!doctype html>
+<html lang="en">
+    <head>
+
+        <meta charset="utf-8">
+        <title>spriteclip.js - Simple API demo</title>
+
+        <link rel="stylesheet" href="css/base.css">
+        <style>
+
+        .awesome-button {
+            display: block;
+            width: 480px;
+            height: 540px;
+            background: url("img/windsack_test.png") no-repeat 0 0;
+            margin-bottom: 1em;
+            border: 1px solid #ccc;
+        }
+            
+        </style>
+
+    </head>
+    <body>
+
+ 
+        <a class="awesome-button"></a>
+        <p class="currentFrame">Current frame: <span>1</span></p>
+
+ 
+
+        <script src="../../dist/jquery.min.js"></script>
+        <script src="../../dist/spriteclip.js"></script>
+
+        <script>
+
+            //Instantiate and get the instance from the element's data-spriteClip property
+            var instance = $(".awesome-button").spriteClip({
+                totalFrames: 190,
+                frameRate: 60,
+                stops: [1, 190]
+            }).data("spriteClip");
+
+            //Equivalent to
+            //var instance = new SpriteClip($(".awesome-button").get(0), {
+            //    totalFrames: 30,
+            //    frameRate: 60,
+            //    stops: [1, 30]
+            //})
+            
+            instance.$el
+                .on("mousedown", function () {
+                    instance.play();
+                })
+                .on("mouseup", function () {
+                    instance.stop();
+                });
+
+            instance.$dispatcher
+                .on(SpriteClip.Event.ENTER_FRAME, function (e, clip) {
+
+                    $(".currentFrame span").text(instance.currentFrame);
+                });
+        </script>
+
+
+    </body>
+</html>

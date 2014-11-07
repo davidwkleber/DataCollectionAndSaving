@@ -1,0 +1,62 @@
+body {
+	background-image: url('../images/Background_big.png');
+	background-repeat: no-repeat;
+	background-size: 100%, 100%;
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+bodyDiv {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 1536px;
+	height: 700px;
+}
+
+a {
+  color: #00B7FF;
+}
+
+
+ 
+svg {
+  font: 10px sans-serif;
+}
+ 
+.line {
+  fill: none;
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+ 
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+ 		.dataInputDiv {
+			position:absolute;
+			left:630px; top:90px;
+		}
+
+		
+		.guageDiv {
+			position: absolute;
+			left: 40px; top: 160px;
+		}
+
+
+	#lineGraphTitle {
+		position: relative;
+		left: 200px;
+		top: 20px;
+	}
+	.lineGraphDiv {
+		position: absolute;
+		left: 1000px;
+		top: 150px;
+		width: 600px;
+	}
+	

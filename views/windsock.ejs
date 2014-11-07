@@ -1,0 +1,187 @@
+
+<!doctype html>
+<html lang="en">
+    <head>
+
+        <meta charset="utf-8">
+        <title>WindSock</title>
+
+        <style>
+
+        .awesome-button {
+            display: block;
+            width: 320px;
+            height: 540px;
+            background: url("images/Windsack_final.png") no-repeat 0 0;
+            margin-bottom: 1em;
+			position:absolute;
+			left:10px; top:380px;
+        }
+        .WScurrentFrame {
+			position: absolute;
+			left: 10;
+			top:890px;
+		}   
+		.WSbuttonDiv{
+			position:absolute;
+			left:50px; top:930px;
+		}
+		#WSupButton{
+			width:60px; height: 40px;
+		}
+		#WSdownButton{
+			width:60px; height: 40px;
+		}		
+        </style>
+
+    </head>
+    <body>
+	
+	<div class="WSbuttonDiv">
+<span class="WSbuttons">
+ <button class="WSupButton" id="WSupButton" name="WSupButton" >/\</button>
+  <button class="WSdownButton" id="WSdownButton" >\/</button>
+ 
+  </span>
+</div>
+ 
+	<div class="windSpeedDiv">
+ <form name="windSpeedForm" id"windSpeedForm" class="windSpeedForm" action="/windSpeed" method="post">
+
+         <a class="awesome-button"></a>
+        <p class="WScurrentFrame" id="WScurrentFrame" >Wind Speed: <span>1</span></p>
+
+        <script>
+var mouseIsDown = "false";
+var WSframeToPlay = 1;
+		//setup a variable to store our last position
+var last_position = {},
+$output       = $('#output');
+
+            //Instantiate and get the instance from the element's data-spriteClip property
+            var WSinstance = $(".awesome-button").spriteClip({
+                totalFrames: 160,
+                frameRate: 60,
+                stops: [1, 160]
+            }).data("spriteClip");
+
+            
+            WSinstance.$el
+
+                .on("touchstart", function () {
+					console.log('mouse down');
+					mouseIsDown = "true";
+				})
+			
+				// $(".awesome-button").on('touchmove', function (event) {
+				.on('touchmove', function (TouchEvent) {
+				
+console.log('touchmove in button '+mouseIsDown);
+		
+					if ( mouseIsDown === "true" ) {
+										console.log('mouseIsDown == true in touchmove');
+
+					//check to make sure there is data to compare against
+					if (typeof(last_position.x) != 'undefined' ) {
+					//get the change from last position to this position
+					console.log('get mouse location from event first time');
+
+					var deltaX = last_position.x - event.touches[0].clientX,
+						deltaY = last_position.y - event.touches[0].clientY;
+
+
+			console.log('deltaY: '+deltaY);			
+WSframeToPlay = Math.floor(+WSframeToPlay + +deltaY/3);
+console.log('Play WS frame: '+WSframeToPlay);
+
+if 	(+WSframeToPlay >= +160) WSframeToPlay = +160;
+if 	(+WSframeToPlay <= +1) WSframeToPlay = +1;
+// WSframeToPlay = Math.floor(WSframeToPlay);		
+console.log('Play WS frame: '+WSframeToPlay);
+WSinstance.gotoAndStop(WSframeToPlay);				
+
+				}
+			} else {
+					console.log('mouseIsDown != true ');
+				}
+							//set the new last position to the current for next time
+					last_position = {
+						x : event.touches[0].clientX,
+						y : event.touches[0].clientY
+					}
+            
+			})
+			
+                .on("touchend", function () {
+					mouseIsDown = "false";
+											console.log('mouseIsDown = false ');
+
+           //         WSinstance.stop();
+					event.preventDefault();
+					console.log('client windSpeed: '+WSinstance.currentFrame);
+					var posting = $.post( '/windSpeed', { windSpeedValue: WSinstance.currentFrame } );
+					posting.done(function( data ) {
+						console.log('client post done ');
+					})
+                });
+
+            WSinstance.$dispatcher
+                .on(SpriteClip.Event.ENTER_FRAME, function (e, clip) {
+
+                    $(".WScurrentFrame span").text(WSinstance.currentFrame);
+                });
+				
+				
+				
+				$('#WSupButton').click(function(TouchEvent){
+  					event.preventDefault();
+										console.log('client wind speed BUTTON: '+WSinstance.currentFrame);
+
+					WSinstance.currentFrame += 1;
+					console.log('client windSpeed BUTTON: '+WSinstance.currentFrame);
+					
+					var posting = $.post( '/windSpeed', { windSpeedValue: WSinstance.currentFrame} );
+										var WScurrentAngle = (WSinstance.currentFrame-100)/10;
+										
+					$(".WScurrentAngle span").text(WScurrentAngle);
+                    $(".WScurrentFrame span").text(WSinstance.currentFrame);
+					WSinstance.nextFrame();
+					posting.done(function( data ) {
+						console.log('client windSpeed post done ');
+					});
+				});
+			$('#WSdownButton').click(function(TouchEvent){
+  					event.preventDefault();
+					WSinstance.currentFrame -= 1;
+					console.log('client windSpeed BUTTON: '+WSinstance.currentFrame);
+					var posting = $.post( '/winsSpeed', { pitchAngleValue: WSinstance.currentFrame } );
+										var WScurrentAngle = (WSinstance.currentFrame-100)/10;
+										
+									
+					$(".WScurrentAngle span").text(WScurrentAngle);
+                    $(".WScurrentFrame span").text(WSinstance.currentFrame);
+					WSinstance.prevFrame();
+					posting.done(function( data ) {
+						console.log('client windSpeed post done ');
+					});
+				});		
+				
+function fixPageXY(e) {
+  if (e.pageX == null && e.clientX != null ) {
+    var html = document.documentElement
+    var body = document.body
+ 
+    e.pageX = e.clientX + (html.scrollLeft || body && body.scrollLeft || 0)
+    e.pageX -= html.clientLeft || 0
+    e.pageY = e.clientY + (html.scrollTop || body && body.scrollTop || 0)
+    e.pageY -= html.clientTop || 0
+  }
+}
+
+				
+				
+        </script>
+ </form>
+	</div>
+    </body>
+</html>

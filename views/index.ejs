@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+	<script src='/lib/ajax/libs/2.0.3/jquery.min.js'></script>
+	<script src='/lib/socket.io/socket.io.js'></script>
+	<script src='/lib/SpriteClip/spriteclip.min.js'></script>
+	<script src='/lib/d3js/d3.v3.min.js'></script>
+	
+<link rel="stylesheet" href="../stylesheets/style.css">
+  <meta charset="utf-8">
+  <title><%= title %></title>
+</head>
+<body>
+<div class="bodyDiv">
+    <h1><%= title %></h1>
+
+	<% include windsock %>
+
+	<% include pitchAngle %>
+		
+	<% include dummyLoad %>
+		
+	<% include dataInput %>
+
+	<%include lineGraph %>
+</div>
+
+</body>
+</html>

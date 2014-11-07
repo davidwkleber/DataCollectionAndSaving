@@ -1,0 +1,82 @@
+
+<!doctype html>
+<html lang="en">
+    <head>
+
+        <meta charset="utf-8">
+        <title>spriteclip.js - Simple API demo</title>
+
+        <link rel="stylesheet" href="css/base.css">
+        <style>
+
+        .awesome-button {
+            display: block;
+            width: 320px;
+            height: 540px;
+            background: url("images/Windsack_final.png") no-repeat 0 0;
+            margin-bottom: 1em;
+            border: 1px solid #ccc;
+			position:absolute;
+			left:10px; top:150px;
+        }
+        .WScurrentFrame {
+			position: absolute;
+			left: 10;
+			top: 140;
+		}   
+
+        </style>
+
+    </head>
+    <body>
+	<div class="windSpeedDiv">
+ <form name="windSpeedForm" id"windSpeedForm" class="windSpeedForm" action="/windSpeed" method="post">
+
+         <a class="awesome-button"></a>
+        <p class="WScurrentFrame">Current frame: <span>1</span></p>
+
+ 
+
+        <script src="demos/dist/jquery.min.js"></script>
+        <script src="demos/dist/spriteclip.js"></script>
+
+        <script>
+            //Instantiate and get the instance from the element's data-spriteClip property
+            var WSinstance = $(".awesome-button").spriteClip({
+                totalFrames: 160,
+                frameRate: 60,
+                stops: [1, 160]
+            }).data("spriteClip");
+
+            //Equivalent to
+            //var instance = new SpriteClip($(".awesome-button").get(0), {
+            //    totalFrames: 30,
+            //    frameRate: 60,
+            //    stops: [1, 30]
+            //})
+            
+            WSinstance.$el
+
+                .on("mousedown", function () {
+                    WSinstance.play();
+                })
+                .on("mouseup", function () {
+                    WSinstance.stop();
+					event.preventDefault();
+					console.log('client windSpeed: '+WSinstance.currentFrame);
+					var posting = $.post( '/windSpeed', { windSpeedValue: WSinstance.currentFrame } );
+					posting.done(function( data ) {
+						console.log('client post done ');
+					});
+                });
+
+            WSinstance.$dispatcher
+                .on(SpriteClip.Event.ENTER_FRAME, function (e, clip) {
+
+                    $(".WScurrentFrame span").text(WSinstance.currentFrame);
+                });
+        </script>
+ </form>
+	</div>
+    </body>
+</html>

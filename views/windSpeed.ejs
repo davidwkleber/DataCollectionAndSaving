@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Wind Speed</title>
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+ 
+  <script>
+  $(function() {
+    var spinner = $( "#spinner" ).spinner();
+
+    $( "#getvalue" ).click(function() {
+		$('form').submit();
+    });
+    $( "#setvalue" ).click(function() {
+      spinner.spinner( "value", 5 );
+    });
+ 
+    $( "button" ).button();
+  });
+   $(function() {
+    $( "#windSpeedSlider-vertical" ).slider({
+      orientation: "vertical",
+      range: "min",
+      min: 0,
+      max: 10,
+
+      value: 6,
+      slide: function( event, ui ) {
+        $( "#windSpeedSliderValue" ).val( ui.value );
+      }
+    });
+    $( "#windSpeedSliderValue" ).val( $( "#windSpeedSlider-vertical" ).slider( "value" ) );
+	
+  });
+
+  </script>
+</head>
+<body>
+ <form name="windSpeedForm" id"windSpeedForm" class="windSpeedForm" action="/windSpeed" method="post">
+<p>
+  <label for="spinner">Wind Speed</label>
+  <input id="spinner" name="value">
+</p>
+ 
+<p>
+  <button id="getvalue" name="getvalue" type="submit">Get value</button>
+</p>
+
+<p>
+  <label for="windSpeedSliderValue">Wind Speed:</label>
+  <input type="text" id="windSpeedSliderValue" name="windSpeedSliderValue" readonly style="border:0; color:#f6931f; font-weight:bold;">
+</p>
+ 
+<div id="windSpeedSlider-vertical" style="height:200px;"></div>
+ 
+ 
+ <% if (locals.seeValue) { %>
+<textarea id="seeValue" name="seeValue" ><%= seeValue %></textarea>
+<% } else { %>
+<textarea id="seeValue" name="seeValue" ></textarea>
+<% } %>
+</form>
+</body>
+</html>

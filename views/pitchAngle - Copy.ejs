@@ -1,0 +1,86 @@
+
+<!doctype html>
+<html lang="en">
+    <head>
+
+        <meta charset="utf-8">
+        <title>Pitch Angle</title>
+
+        <link rel="stylesheet" href="css/base.css">
+        <style>
+
+        .pitchAngle-button {
+            display: block;
+            width: 280px;
+            height: 540px;
+            background: url("images/Pitch_final.png") no-repeat 0 0;
+            margin-bottom: 1em;
+            border: 1px solid #ccc;
+			position:absolute;
+			left:330px; top:150px;
+        }
+        .PAcurrentFrame {
+			position:absolute;
+			left:330px; top:150px;
+		}
+		
+		.pitchAngelDiv {
+			position:absolute;
+			left:330px; top:150px;
+		}
+        </style>
+	
+
+    </head>
+    <body>
+	
+<div class=pitchAngleDiv>
+ <form name="pitchAngleForm" id"pitchAngleForm" class="pitchAngleForm" action="/pitchAngle" method="post">
+
+         <a class="pitchAngle-button"></a>
+        <p class="PAcurrentFrame">Current frame: <span>1</span></p>
+
+ 
+
+        <script src="demos/dist/jquery.min.js"></script>
+        <script src="demos/dist/spriteclip.js"></script>
+
+        <script>
+            //Instantiate and get the instance from the element's data-spriteClip property
+            var PAinstance = $(".pitchAngle-button").spriteClip({
+                totalFrames: 600,
+                frameRate: 60,
+                stops: [1, 600]
+            }).data("spriteClip");
+
+            //Equivalent to
+            //var instance = new SpriteClip($(".pitchAngle-button").get(0), {
+            //    totalFrames: 30,
+            //    frameRate: 60,
+            //    stops: [1, 30]
+            //})
+            
+            PAinstance.$el
+                .on("mousedown", function () {
+                    PAinstance.play();
+                })
+                .on("mouseup", function () {
+                    PAinstance.stop();
+					event.preventDefault();
+					console.log('client pitchAngle: '+PAinstance.currentFrame);
+					var posting = $.post( '/pitchAngle', { pitchAngleValue: PAinstance.currentFrame } );
+					posting.done(function( data ) {
+						console.log('client pitchAngle post done ');
+					});
+                });
+
+            PAinstance.$dispatcher
+                .on(SpriteClip.Event.ENTER_FRAME, function (e, clip) {
+
+                    $(".PAcurrentFrame span").text(PAinstance.currentFrame);
+                });
+        </script>
+ </form>
+</div>
+    </body>
+</html>

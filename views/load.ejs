@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Load</title>
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+  <link rel="stylesheet" href="../stylesheets/style.css">
+  <script>
+  $(function() {
+    var spinner = $( "#spinner" ).spinner();
+
+    $( "#getvalue" ).click(function() {
+		$('form').submit();
+    });
+    $( "#setvalue" ).click(function() {
+      spinner.spinner( "value", 5 );
+    });
+ 
+    $( "button" ).button();
+  });
+      $(function() {
+    $( "#loadSlider-vertical" ).slider({
+      orientation: "vertical",
+      range: "min",
+      min: 0,
+      max: 10,
+      value: 6,
+      slide: function( event, ui ) {
+        $( "#loadSliderValue" ).val( ui.value );
+      }
+    });
+    $( "#loadSliderValue" ).val( $( "#loadSlider-vertical" ).slider( "value" ) );
+	
+  });
+  </script>
+</head>
+<body>
+ <form name="loadForm" id"loadForm" class="loadForm" action="/load" method="post">
+<p>
+  <label for="spinner">Load</label>
+  <input id="spinner" name="value">
+</p>
+ 
+<p>
+  <button id="getvalue" name="getvalue" type="submit">Get value</button>
+</p>
+ <p>
+  <label for="loadSliderValue">Wind Speed:</label>
+  <input type="text" id="loadSliderValue" name="loadSliderValue" readonly style="border:0; color:#f6931f; font-weight:bold;">
+</p>
+ 
+<div id="loadSlider-vertical" style="height:200px;"></div>
+
+ <% if (locals.load_seeValue) { %>
+<textarea id="load_seeValue" name="load_seeValue" ><%= load_seeValue %></textarea>
+<% } else { %>
+<textarea id="load_seeValue" name="load_seeValue" ></textarea>
+<% } %>
+</form>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI Spinner - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="/resources/demos/external/jquery-mousewheel/jquery.mousewheel.js"></script>
+  <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script>
+  $(function() {
+    var spinner = $( "#spinner" ).spinner();
+
+    $( "#getvalue" ).click(function() {
+		$('form').submit();
+    });
+    $( "#setvalue" ).click(function() {
+      spinner.spinner( "value", 5 );
+    });
+ 
+    $( "button" ).button();
+  });
+    $(function() {
+    $( "#pitchAngleSlider-vertical" ).slider({
+      orientation: "vertical",
+      range: "min",
+      min: 0,
+
+      max: 10,
+      value: 6,
+      slide: function( event, ui ) {
+        $( "#pitchAngleSliderValue" ).val( ui.value );
+      }
+    });
+    $( "#pitchAngleSliderValue" ).val( $( "#pitchAngleSlider-vertical" ).slider( "value" ) );
+	
+  });
+  </script>
+</head>
+<body>
+ <form name="pitchAngleForm" id"pitchAngleForm" class="pitchAngleForm" action="/pitchAngle" method="post">
+<p>
+  <label for="spinner">Pitch Angle</label>
+  <input id="spinner" name="value">
+</p>
+ 
+<p>
+  <button id="getvalue" name="getvalue" type="submit">Get value</button>
+</p>
+<p>
+  <label for="pitchAngleSliderValue">Pitch Angle:</label>
+
+  <input type="text" id="pitchAngleSliderValue" name="pitchAngleSliderValue" readonly style="border:0; color:#f6931f; font-weight:bold;">
+</p>
+ 
+<div id="pitchAngleSlider-vertical" style="height:200px;"></div>
+
+<% if (locals.PAseeValue) { %>
+<textarea id="PAseeValue" name="PAseeValue" ><%= PAseeValue %></textarea>
+<% } else { %>
+<textarea id="PAseeValue" name="PAseeValue" ></textarea>
+<% } %>
+</form>
+</body>
+</html>

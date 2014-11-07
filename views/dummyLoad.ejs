@@ -1,0 +1,175 @@
+
+<!doctype html>
+<html lang="en">
+    <head>
+
+        <meta charset="utf-8">
+        <title>Dummy Load</title>
+
+        <style>
+
+        .DLawesome-button {
+            display: block;
+            width: 420px;
+            height: 300px;
+            background: url("images/load.png") no-repeat 0 0;
+            margin-bottom: 1em;
+			position:absolute;
+			left:500px; top:630px;
+        }
+		.DLcurrentFrame {
+			position:absolute;
+			left:640px; top:890px;
+		}
+		.DLbuttonDiv{
+			position:absolute;
+			left:640px; top:930px;
+		}
+		#DLupButton{
+			width:60px; height: 40px;
+		}
+		#DLdownButton{
+			width:60px; height: 40px;
+		}		
+        </style>
+
+    </head>
+    <body>
+	        <p class="DLcurrentFrame" id="DLcurrentFrame" >Dummy Load: <span>1</span></p>
+
+		<div class="DLbuttonDiv">
+
+			<span class="DLbuttons">
+				<button class="DLupButton" id="DLupButton" name="DLupButton" >/\</button>
+				<button class="DLdownButton" id="DLdownButton" >\/</button>
+			</span>
+		</div>
+ 
+	
+	<div class="dummyLoadDiv">
+ <form name="dummyLoadForm" id"dummyLoadForm" class="dummyLoadForm" action="/dummyLoad" method="post">
+
+         <a class="DLawesome-button"></a>
+
+        <script>
+var mouseIsDown = "false";
+var DLframeToPlay = 1;
+
+		//setup a variable to store our last position
+var last_position = {},
+$output       = $('#output');
+
+            //Instantiate and get the instance from the element's data-spriteClip property
+            var DLinstance = $(".DLawesome-button").spriteClip({
+                totalFrames: 201,
+                frameRate: 60,
+                stops: [201, 1]
+            }).data("spriteClip");
+
+            DLinstance.$el
+
+                .on("touchstart", function () {
+					console.log('mouse down');
+					mouseIsDown = "true";
+				})
+			
+				$(".DLawesome-button").on('touchmove', function (TouchEvent) {
+
+//					console.log('mouse move');
+					if ( mouseIsDown === "true" ) {
+//										console.log('mouseIsDown == true');
+
+					//check to make sure there is data to compare against
+					if (typeof(last_position.x) != 'undefined' ) {
+					//get the change from last position to this position
+					var deltaX = last_position.x - event.touches[0].clientX,
+						deltaY = last_position.y - event.touches[0].clientY;
+
+DLframeToPlay = DLframeToPlay + deltaY;
+if 	(DLframeToPlay > 201) DLframeToPlay = 201;		
+if 	(DLframeToPlay < 1) DLframeToPlay = 1;		
+DLinstance.gotoAndStop(DLframeToPlay);
+
+				}
+				} else {
+//					console.log('mouseIsDown != true ');
+				}
+							//set the new last position to the current for next time
+					last_position = {
+						x : event.touches[0].clientX,
+						y : event.touches[0].clientY
+					}
+            
+			})
+			
+                .on("touchend", function () {
+					mouseIsDown = "false";
+                    DLinstance.stop();
+					event.preventDefault();
+					console.log('client dummyLoad: '+DLinstance.currentFrame);
+					var posting = $.post( '/dummyLoad', { dummyLoadValue: DLinstance.currentFrame } );
+					posting.done(function( data ) {
+						console.log('client post done ');
+					})
+                });
+
+            DLinstance.$dispatcher
+                .on(SpriteClip.Event.ENTER_FRAME, function (e, clip) {
+
+                    $(".DLcurrentFrame span").text(DLinstance.currentFrame);
+                });
+							
+				
+				$('#DLupButton').click(function(TouchEvent){
+  					event.preventDefault();
+										console.log('client dummyLoad BUTTON: '+DLinstance.currentFrame);
+
+					DLinstance.currentFrame += 1;
+					console.log('client dummyLoad BUTTON: '+DLinstance.currentFrame);
+					
+					var posting = $.post( '/dummyLoad', { dummyLoad: DLinstance.currentFrame} );
+										var DLcurrentAngle = (DLinstance.currentFrame-100)/10;
+										
+					$(".DLcurrentAngle span").text(DLcurrentAngle);
+                    $(".DLcurrentFrame span").text(DLinstance.currentFrame);
+					DLinstance.nextFrame();
+					posting.done(function( data ) {
+						console.log('client dummyLoad post done ');
+					});
+				});
+			$('#DLdownButton').click(function(TouchEvent){
+  					event.preventDefault();
+					DLinstance.currentFrame -= 1;
+					console.log('client dummyLoad BUTTON: '+DLinstance.currentFrame);
+					var posting = $.post( '/dummyLoad', { dummyLoad: DLinstance.currentFrame } );
+										var DLcurrentAngle = (DLinstance.currentFrame-100)/10;
+										
+									
+					$(".DLcurrentAngle span").text(DLcurrentAngle);
+                    $(".DLcurrentFrame span").text(DLinstance.currentFrame);
+					DLinstance.prevFrame();
+					posting.done(function( data ) {
+						console.log('client dummyLoad post done ');
+					});
+				});		
+					
+				
+function fixPageXY(e) {
+  if (e.pageX == null && e.clientX != null ) {
+    var html = document.documentElement
+    var body = document.body
+ 
+    e.pageX = e.touches[0].clientX + (html.scrollLeft || body && body.scrollLeft || 0)
+    e.pageX -= html.clientLeft || 0
+    e.pageY = e.touches[0].clientY + (html.scrollTop || body && body.scrollTop || 0)
+    e.pageY -= html.clientTop || 0
+  }
+}
+
+				
+				
+        </script>
+ </form>
+	</div>
+    </body>
+</html>

@@ -1,0 +1,118 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Guages</title>
+<link rel="stylesheet" href="../stylesheets/style.css">
+  <style>
+  input, label {
+    line-height: 1.5em;
+  }
+  </style>
+<style>
+	.graphSelectButtons {
+			position: absolute;
+			left: 1150px; top: 800px;
+		}
+
+</style>
+
+  </head>
+
+<body onLoad="linedataInputFunction()">
+  	
+	<div class="lineGraphDiv"name="lineGraphDiv" id="lineGraphDiv" >
+	<h1 id=lineGraphTitle>power</h1>
+	<script type="text/javascript" src="/javascripts/lineScan.js"></script>
+	</div>
+
+
+	<form>
+		<div class="graphSelectButtons">
+			<fieldset id="graphDataSelection">
+				<legend>Select which data to graph</legend>
+							
+
+				<span>
+				<input type="radio" class="dataSelectorRadio" name="measuredData" id="current" value="current">
+				<label for="current">Current</label>
+				</span>
+				<span>
+				<input type="radio"  class="dataSelectorRadio" name="measuredData" id="voltage" value="voltage">
+				<label for="voltage">Voltage</label>
+				</span>
+				<span>
+				<input type="radio"  class="dataSelectorRadio" name="measuredData" id="power" value="power" checked=true>
+				<label for="power">Power</label>
+				</span>
+				<span>
+				<input type="radio"  class="dataSelectorRadio" name="measuredData" id="rpm" value="rpm">
+				<label for="rpm">RPM</label>
+				</span>
+			<div id="selectedData"></div>
+	</form>
+	</fieldset>
+		<script>
+		var dataSelected = 'power';
+		
+			$( "input" ).on( "click", function() {
+
+	//		$("#selectedData").html($( "input:checked" ).val() + " is checked!" );
+						$("#lineGraphTitle").html($( "input:checked" ).val() );
+
+			 dataSelected = $("input:checked").val();
+			console.log('dataSelected item is: '+dataSelected);
+		});	
+						var dataItem;
+			var iosocket = io.connect('http://127.0.0.1:1337');
+
+			iosocket.on('connect', function (data) {
+					console.log('lineGraph client connected ');
+					console.log('lineGraph connected data ' + data);
+
+				
+			jQuery(function ($) {
+				iosocket.on('updateData', function (data) {
+					console.log('lineGraph update: ' + data);
+					dataItem = JSON.parse(data);
+					console.log('lineGraph updateData power ' + dataItem.power);
+
+					switch (dataSelected) {
+						case 'power':
+							console.log('graph power '+dataSelected);
+							tick( dataItem.power );
+							break;
+						case 'current':
+							console.log('graph current '+dataSelected);
+							tick( dataItem.current );
+							break;
+						case 'voltage':
+							console.log('graph voltage '+dataSelected);
+							tick( dataItem.voltage );
+							break;
+						case 'rpm':
+							var realRPM = Math.floor(((dataItem.rpm * 3.3)/1024)*1000); //*666.667);
+							console.log('graph rpm '+dataSelected);
+							tick( realRPM );
+							break;
+						default:
+							console.log('graph default');
+							tick( dataItem.power );
+					}
+				 
+				});
+			});
+		
+				});
+				
+	
+		</script>			
+					
+ 
+ 
+ 
+  </div>
+ 
+</body>
+</html>

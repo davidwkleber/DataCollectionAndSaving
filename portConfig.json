@@ -1,0 +1,23 @@
+{
+	"stepper": {
+		"port": "COM3",
+		"baudrate": "115200"
+	},
+	"measurement": {
+		"port": "COM5",
+		"baudrate": "9600"
+	},
+	"loadController": {
+		"port": "COM8",
+		"baudrate": "9600"
+	},
+	"windSpeed": {
+		"port": "COM12",
+		"baudrate": "9600"
+	},
+	"acceleration": {
+		"port": "COM13",
+		"baudrate": "115200"
+	}
+
+}

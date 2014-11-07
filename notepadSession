@@ -1,0 +1,19 @@
+<NotepadPlus>
+    <Session activeView="0">
+        <mainView activeIndex="2">
+            <File firstVisibleLine="39" xOffset="0" scrollWidth="1224" startPos="1335" endPos="1335" selMode="0" lang="Javascript" encoding="-1" filename="C:\Users\dkleber\Documents\GitHub\ArduinoData\lib\serialListener.js" backupFilePath="" originalFileLastModifTimestamp="1411670355" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1224" startPos="99" endPos="113" selMode="0" lang="Javascript" encoding="-1" filename="C:\Users\dkleber\Documents\GitHub\ArduinoData\routes\dataInput.js" backupFilePath="" originalFileLastModifTimestamp="1411662991" />
+            <File firstVisibleLine="10" xOffset="0" scrollWidth="1224" startPos="481" endPos="481" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\dkleber\Documents\GitHub\ArduinoData\views\dataInput.ejs" backupFilePath="" originalFileLastModifTimestamp="1411733811" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1224" startPos="302" endPos="311" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\dkleber\Documents\GitHub\ArduinoData\views\index.ejs" backupFilePath="" originalFileLastModifTimestamp="1411568320" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1224" startPos="578" endPos="585" selMode="0" lang="Javascript" encoding="-1" filename="C:\Users\dkleber\Documents\GitHub\ArduinoData\app.js" backupFilePath="" originalFileLastModifTimestamp="1411666642" />
+            <File firstVisibleLine="26" xOffset="0" scrollWidth="1224" startPos="596" endPos="602" selMode="0" lang="Javascript" encoding="-1" filename="C:\Users\dkleber\Documents\GitHub\ArduinoData\routes\pitchAngle.js" backupFilePath="" originalFileLastModifTimestamp="1410881466" />
+            <File firstVisibleLine="130" xOffset="0" scrollWidth="1224" startPos="1798" endPos="1816" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\dkleber\Documents\GitHub\ArduinoData\views\pitchAngle.ejs" backupFilePath="" originalFileLastModifTimestamp="1411470386" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1224" startPos="95" endPos="198" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\dkleber\Documents\GitHub\ArduinoData\views\guages.ejs" backupFilePath="" originalFileLastModifTimestamp="1411471475" />
+            <File firstVisibleLine="51" xOffset="0" scrollWidth="1224" startPos="2243" endPos="2272" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\dkleber\Documents\GitHub\ArduinoData\lib\ADC_Stream\ADC_Stream.ino" backupFilePath="" originalFileLastModifTimestamp="1410536722" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1224" startPos="359" endPos="366" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\dkleber\Documents\GitHub\ArduinoData\package.json" backupFilePath="" originalFileLastModifTimestamp="1411669551" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1224" startPos="578" endPos="679" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\dkleber\Documents\GitHub\ArduinoData\views\windsock.ejs" backupFilePath="" originalFileLastModifTimestamp="1411470423" />
+            <File firstVisibleLine="45" xOffset="0" scrollWidth="1224" startPos="1393" endPos="1393" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\dkleber\Documents\GitHub\ArduinoData\views\dummyLoad.ejs" backupFilePath="" originalFileLastModifTimestamp="1411732448" />
+        </mainView>
+        <subView activeIndex="0" />
+    </Session>
+</NotepadPlus>
