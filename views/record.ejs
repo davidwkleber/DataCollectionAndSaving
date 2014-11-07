@@ -43,24 +43,24 @@
 
 	</fieldset>
 		<script>
-		var dataItem;
+		var recordDataItem;
 		var recordedData;
-		var iosocket;
+		var recordsocket;
 		
 		
 			console.log('record');
 			recordedData = [];
-			var iosocket = io.connect('http://127.0.0.1:1337');
+			var recordsocket = io.connect('http://127.0.0.1:1337');
 
-			iosocket.on('connect', function (data) {
+			recordsocket.on('connect', function (data) {
 					console.log('record client connected ');
 					console.log('record connected data ' + data);
 			
 				jQuery(function ($) {
-					iosocket.on('updateData', function (data) {
+					recordsocket.on('updateData', function (data) {
 					//	console.log('record update raw: ' + data);
-						dataItem = JSON.parse(data);
-					//	console.log('record updateData  ' + dataItem.power);
+						recoreDataItem = JSON.parse(data);
+					//	console.log('record updateData  ' + recordDataItem.power);
 						recordedData.push(data);
 					});	
 			
@@ -70,12 +70,13 @@
 		}
 		function stopRecordFunction() {
 			console.log('stop recording');
-			iosocket.disconnect();
+		//	recordsocket.disconnect();
 		}
 		
 		function saveDataFunction() {
 			console.log('save data');
 			console.log('recorded data saved: '+recordedData);
+			recordedData = [];
 		}
 		
 		
@@ -91,15 +92,15 @@
 			console.log('dataSelected item is: '+dataSelected);
 		});	
 						var dataItem;
-			var iosocket = io.connect('http://127.0.0.1:1337');
+			var recordsocket = io.connect('http://127.0.0.1:1337');
 
-			iosocket.on('connect', function (data) {
+			recordsocket.on('connect', function (data) {
 					console.log('lineGraph client connected ');
 					console.log('lineGraph connected data ' + data);
 
 				
 			jQuery(function ($) {
-				iosocket.on('updateData', function (data) {
+				recordsocket.on('updateData', function (data) {
 					console.log('lineGraph update: ' + data);
 					dataItem = JSON.parse(data);
 					console.log('lineGraph updateData power ' + dataItem.power);

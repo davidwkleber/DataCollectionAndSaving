@@ -54,6 +54,7 @@
 	</form>
 	</fieldset>
 		<script>
+		console.log('what the f');
 		var dataSelected = 'power';
 		
 			$( "input" ).on( "click", function() {
@@ -65,15 +66,15 @@
 		//	console.log('dataSelected item is: '+dataSelected);
 		});	
 						var dataItem;
-			var iosocket = io.connect('http://127.0.0.1:1337');
+			var lineGraphSocket = io.connect('http://127.0.0.1:1337');
 
-			iosocket.on('connect', function (data) {
+			lineGraphSocket.on('connect', function (data) {
 					console.log('lineGraph client connected ');
 			//		console.log('lineGraph connected data ' + data);
 
 				
 			jQuery(function ($) {
-				iosocket.on('updateData', function (data) {
+				lineGraphSocket.on('updateData', function (data) {
 			//		console.log('lineGraph update: ' + data);
 					dataItem = JSON.parse(data);
 			//		console.log('lineGraph updateData power ' + dataItem.power);
