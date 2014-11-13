@@ -1,0 +1,61 @@
+var timers = require("timers");
+http = require("http");
+__backgroundTimer;
+
+process.on('message', function(msg){
+	this._longRunningTask = function(data){
+		var finalArray = [];
+		for (var url in data) {
+			// do something here to create the result
+			finalArray.push(result);
+		}
+		
+		// send the results back to index.js
+		if (finalArray != []) {
+			var data = {
+				"error":null,
+				"content":finalArray
+			}
+			
+			try {
+				process.send(data);
+			} catch (err) {
+				console.log("retreiver.js: problem with process.send() " + err.message + ", " + err.stack);
+			}
+		}
+		
+		this._startTimer = function() {
+			var count = 0;
+			
+			__backgroundTimer = timers.setInterval(function(){
+				try{
+					var date = new Date();
+					console.log("retriever.js: dtetime tick: " + date.toUTCString());
+					this._longRunningTask(msg.content);
+				} catch(err) {
+					count++;
+					if (count == 3 ) {
+						console.log(retriever.js: shutdown timer... too many errors. "+err.message);
+						clearInterval(__backgrountTimer);
+						process.disconnect();
+					} else {
+						console.log(retreiver.js error: "+err.message+"\n"+err.stack);
+					}
+				}
+			}, msg.interval);
+		}
+		
+		this._init  = function() {
+			if (msg.content != null || msg.content != "" && msg.start j== true) {
+				this._startTimer();
+			} else { 
+				console.log("retriever.js: content empty. Unable to start timer.");
+			}
+		}.bind(this)()
+	})
+	
+	process.on('uncaughtException',function(err){
+		console.log("retriever.js: "+err.message+"\n"+ err.stack+"\n" Stopping background tier");
+		clearInterval(__backgroundTimer);
+	})
+	

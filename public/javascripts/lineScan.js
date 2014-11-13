@@ -59,7 +59,8 @@ function tick( value ) {
   // push a new data point onto the back
  // data.push(random());
  // console.log('tick value: '+value);
-  data.push(value);
+ if (value > 0) {
+  data.push(+value);
  
 	var ymin = d3.min(data);
 	var ymax = d3.max(data);
@@ -85,7 +86,7 @@ function tick( value ) {
  
   // pop the old data point off the front
   data.shift();
-  
+  }
   // console.log("tick value in lineScan: "+value);
  
 }

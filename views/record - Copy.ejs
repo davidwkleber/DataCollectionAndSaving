@@ -27,7 +27,7 @@
 
 
 
-		<div class="recordButtons"  id="recordButtions">
+		<div class="recordButtons">
 			<fieldset id="recordButtonsSet">
 				<legend>Record and Save Data</legend>
 				<span>
@@ -39,13 +39,10 @@
 				<span>
 				<button class="saveDataButton" id="saveDataButton" name="saveDataButton" onclick="saveDataFunction()">Save</button> 
 				</span>
-			<div id="saveDataDiv">
-			<p id="saveDataLinkPlace"></p>
-			</div>
+			<div id="selectedData"></div>
+
 	</fieldset>
 		<script>
-/* This was a version that would use the server side for holding data
-	sending post requests to the API 
 	//	var recordButtonElement = document.getElementById('recordButton');
 	//		recordButtonElement.onClick( function() {
 			function recordFunction() {
@@ -78,12 +75,13 @@
 						console.log('client saveData post done ');
 					});
                 };
-*/
-
+/*
 		var recordDataItem;
 		var recordedData;
 		var recordsocket;
-		var recordDataFlag = false;
+		
+		
+			console.log('record');
 			recordedData = [];
 			var recordsocket = io.connect('http://127.0.0.1:1337');
 
@@ -93,57 +91,82 @@
 			
 				jQuery(function ($) {
 					recordsocket.on('updateData', function (data) {
-						// console.log('record update raw: ' + data);
-						if( recordDataFlag) {
-							recordDataItem = JSON.parse(data);
-						// 	console.log('record updateData.power  ' + recordDataItem.power);
-							recordedData.push(data);
-						}
+					//	console.log('record update raw: ' + data);
+						recoreDataItem = JSON.parse(data);
+					//	console.log('record updateData  ' + recordDataItem.power);
+						recordedData.push(data);
 					});	
 			
 				});
 			});	
-		function recordFunction() {
-			console.log('start recording');
-			recordDataFlag = true;
+			function recordFunction() {
 		}
 		function stopRecordFunction() {
 			console.log('stop recording');
-			recordDataFlag = false;
-			// recordsocket.disconnect();
+		//	recordsocket.disconnect();
 		}
 		
 		function saveDataFunction() {
 			console.log('save data');
 			console.log('recorded data saved: '+recordedData);
-			;
-						
-			// var json = JSON.stringify(recordedData);
-			var json = recordedData;
-			var blob = new Blob([json], {type: "application/json"});
-			var url = URL.createObjectURL(blob);
-			
-			var a = document.createElement('a');
-			a.id = "saveDataLinkPlace";
-			var date = new Date();
-			var fileName = "data."+date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" "+date.getHours()+"."+date.getMinutes()+".json";
-			a.download = fileName;
-			a.href = url;
-			a.textContent = "Download data as JSON";
-
-			
-			var parent = document.getElementById("saveDataDiv");
-			var linkPlace = document.getElementById("saveDataLinkPlace");
-			var linkStuff = document.createElement("p");
-			linkStuff.appendChild(a);
-			linkStuff.id = "saveDataLinkPlace";
-			parent.replaceChild(linkStuff,linkPlace);
-			
-			
-			recordedData = []
+			recordedData = [];
 		}
 		
+*/
+		/*
+		var dataSelected = 'power';
+		
+			$( "input" ).on( "click", function() {
 
+	//		$("#selectedData").html($( "input:checked" ).val() + " is checked!" );
+						$("#lineGraphTitle").html($( "input:checked" ).val() );
+
+			 dataSelected = $("input:checked").val();
+			console.log('dataSelected item is: '+dataSelected);
+		});	
+						var dataItem;
+			var recordsocket = io.connect('http://127.0.0.1:1337');
+
+			recordsocket.on('connect', function (data) {
+					console.log('lineGraph client connected ');
+					console.log('lineGraph connected data ' + data);
+
+				
+			jQuery(function ($) {
+				recordsocket.on('updateData', function (data) {
+					console.log('lineGraph update: ' + data);
+					dataItem = JSON.parse(data);
+					console.log('lineGraph updateData power ' + dataItem.power);
+
+					switch (dataSelected) {
+						case 'power':
+							console.log('graph power '+dataSelected);
+							tick( dataItem.power );
+							break;
+						case 'current':
+							console.log('graph current '+dataSelected);
+							tick( dataItem.current );
+							break;
+						case 'voltage':
+							console.log('graph voltage '+dataSelected);
+							tick( dataItem.voltage );
+							break;
+						case 'rpm':
+							var realRPM = Math.floor(((dataItem.rpm * 3.3)/1024)*1000); //*666.667);
+							console.log('graph rpm '+dataSelected);
+							tick( realRPM );
+							break;
+						default:
+							console.log('graph default');
+							tick( dataItem.power );
+					}
+				 
+				});
+			});
+		
+				});
+				
+	*/
 		</script>			
 					
  

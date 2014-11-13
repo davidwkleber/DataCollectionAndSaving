@@ -6,7 +6,7 @@
 
 var express = require('express');
 var router = express.Router();
-var io = require('socket.io');
+var socketio = require('socket.io');
 
 // middleware specific to this route, logs timestamps
 router.use(function timeLog(req, res, next){
@@ -42,7 +42,7 @@ router.recordData =  function(req, res, next){
 		
 			console.log('record');
 			recordedData = [];
-			var recordsocket = io.connect('http://127.0.0.1:1337');
+			var recordsocket = socketio.connect('http://127.0.0.1:1337');
 
 			recordsocket.on('connect', function (data) {
 					console.log('record client connected ');

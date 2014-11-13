@@ -187,8 +187,9 @@ void loop()
 		dataItem["power"] = Power;
 		dataItem["timestamp"] = currTime;
 		dataItem.prettyPrintTo(Serial);
-		
 		Serial.println();
+		Serial.println("EOL");
+
 
 		
 	}

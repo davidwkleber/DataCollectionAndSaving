@@ -4,17 +4,9 @@ module.exports = serialListener;
 var app = require('./app');
 var portConfig = require('./portConfig.json');
 
-/*
-var http = require('http');
-var httpServer = http.createServer();
-var io = require('socket.io').listen(http);
-
-	io.on('connection', function (socket) {
-			console.log('DI connection here');
-		});
-httpServer.listen(3001);
-*/
-var SerialPort = require("serialport").SerialPort
+var serialport = require("serialport");
+var SerialPort = serialport.SerialPort; // localize object constructor
+// var SerialPort = require("serialport").SerialPort
 
 console.log('ports '+ portConfig.stepper.port +" "+ portConfig.windSpeed.port + " " + portConfig.measurement.port);
 
@@ -45,6 +37,7 @@ console.log('ports '+ portConfig.stepper.port +" "+ portConfig.windSpeed.port + 
 
 	DIserialPort = new SerialPort(portConfig.measurement.port, {
 		baudrate: portConfig.measurement.baudrate,
+		parser: serialport.parsers.readline("EOL"),
 	}, function (err) {
 		if (err) console.log('Eroror opening measurement  port: ' +  portConfig.measurement.port);
 	});
@@ -143,12 +136,14 @@ io.sockets.on('connection', function(socket){
  var receivedData = '';
  var chunksIn = 0;
     DIserialPort.on('data', function(data) {
+	console.log('size of data packet: '+data.length);
 //	console.log('DIserialPort data in is: '+data.toString());
 	chunksIn = chunksIn+1;
 //	console.log('chunksIn: '+chunksIn);
          receivedData += data.toString();
- // console.log(' DIserailPort data received: ' + receivedData );
-  //console.log(' ');
+	console.log(' ');
+   console.log(' DIserailPort data received: ' + data.toString() );
+   console.log(' ');
 			var jsonOpened = receivedData.indexOf('{');
 			var jsonClosed = receivedData.indexOf('}', jsonOpened);
 //			console.log('Opened: '+jsonOpened);
@@ -158,9 +153,9 @@ io.sockets.on('connection', function(socket){
          // if (receivedData .indexOf('{') >= 0 && receivedData .indexOf('}') >= 0) {
 		// sendData = receivedData.substring(receivedData.indexOf('{'), receivedData.indexOf('}')+1);
 			sendData = receivedData.substring(jsonOpened, jsonClosed+1);
-			receivedData = '';
+			receivedData = receivedData.substring(jsonClosed+2, receivedData.length);'';
 			chunksIn = 0;
-//	   console.log(' DIserailPort Full data received: ' + sendData )
+	   console.log(' DIserailPort Full data received: ' + sendData )
 
          }
 		 }
