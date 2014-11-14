@@ -71,6 +71,11 @@ $output       = $('#output');
                 .on("touchstart", function () {
 					console.log('mouse down');
 					mouseIsDown = "true";
+					DLlast_position = {
+						x : event.touches[0].clientX,
+						y : event.touches[0].clientY
+											
+					}
 				})
 			
 				$(".DLawesome-button").on('touchmove', function (TouchEvent) {
@@ -80,12 +85,12 @@ $output       = $('#output');
 //										console.log('mouseIsDown == true');
 
 					//check to make sure there is data to compare against
-					if (typeof(last_position.x) != 'undefined' ) {
+					if (typeof(DLlast_position.x) != 'undefined' ) {
 					//get the change from last position to this position
-					var deltaX = last_position.x - event.touches[0].clientX,
-						deltaY = last_position.y - event.touches[0].clientY;
+					var deltaX = DLlast_position.x - event.touches[0].clientX,
+						deltaY = DLlast_position.y - event.touches[0].clientY;
 
-DLframeToPlay = DLframeToPlay + deltaY;
+DLframeToPlay = Math.floor(DLframeToPlay + deltaY);
 if 	(DLframeToPlay > 201) DLframeToPlay = 201;		
 if 	(DLframeToPlay < 1) DLframeToPlay = 1;		
 DLinstance.gotoAndStop(DLframeToPlay);
@@ -95,7 +100,7 @@ DLinstance.gotoAndStop(DLframeToPlay);
 //					console.log('mouseIsDown != true ');
 				}
 							//set the new last position to the current for next time
-					last_position = {
+					DLlast_position = {
 						x : event.touches[0].clientX,
 						y : event.touches[0].clientY
 					}

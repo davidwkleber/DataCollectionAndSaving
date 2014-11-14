@@ -3,8 +3,8 @@ var n = 40,
     random = d3.random.normal(0, .2),
     data = d3.range(n).map(random);
  
-var margin = {top: 20, right: 20, bottom: 20, left: 40},
-	width = 600 - margin.left - margin.right,
+var margin = {top: 20, right: 20, bottom: 20, left: 50},
+	width = 700 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
  
 var x = d3.scale.linear()
@@ -59,7 +59,7 @@ function tick( value ) {
   // push a new data point onto the back
  // data.push(random());
  // console.log('tick value: '+value);
- if (value > 0) {
+ if (value >= 0) {
   data.push(+value);
  
 	var ymin = d3.min(data);

@@ -13,7 +13,7 @@
 <style>
 	.recordButtons {
 			position: absolute;
-			left: 1400px; top: 90px;
+			left: 1400px; top: 800px;
 		}
 
 </style>
@@ -44,36 +44,32 @@
 			</div>
 	</fieldset>
 		<script>
-/* This was a version that would use the server side for holding data
-	sending post requests to the API 
-	//	var recordButtonElement = document.getElementById('recordButton');
-	//		recordButtonElement.onClick( function() {
-			function recordFunction() {
+/* 
+	// This was a version that would use the server side for holding data
+	// sending post requests to the API 
+	
+		function recordFunction() {
 					event.preventDefault();
 					console.log('client recordData started : ');
-					var posting = $.post( '/recordData', { pitchAngleValue: PAinstance.currentFrame } );
+					var posting = $.post( '/recordData', { } );
 					posting.done(function( data ) {
 						console.log('client recordData post done ');
 					});
                 };
 						
-		// var stopRecordButtonElement = document.getElementById('stopRecordButton');
-		// 	stopRecordButtonElement.onClick( function() {
 		function stopRecordFunction() {
 					event.preventDefault();
 					console.log('client stopoRecording started : ');
-					var posting = $.post( '/stopRecording', { pitchAngleValue: PAinstance.currentFrame } );
+					var posting = $.post( '/stopRecording', {  } );
 					posting.done(function( data ) {
 						console.log('client stopRecording post done ');
 					});
                 };
 				
 		function saveDataFunction() {					
-	//	var saveDataButtonElement = document.getElementById('saveDataButton');
-		//	saveDataButtonElement.onClick( function() {
 					event.preventDefault();
 					console.log('client saveData started : ');
-					var posting = $.post( '/saveData', { pitchAngleValue: PAinstance.currentFrame } );
+					var posting = $.post( '/saveData', {  } );
 					posting.done(function( data ) {
 						console.log('client saveData post done ');
 					});
@@ -105,22 +101,28 @@
 			});	
 		function recordFunction() {
 			console.log('start recording');
+			$('#recordButton').css('background-color','#f47121');
 			recordDataFlag = true;
 		}
 		function stopRecordFunction() {
 			console.log('stop recording');
 			recordDataFlag = false;
+			$('#recordButton').css('background-color','#e8e8e8');
 			// recordsocket.disconnect();
 		}
 		
 		function saveDataFunction() {
 			console.log('save data');
 			console.log('recorded data saved: '+recordedData);
-			;
+			
+			recordDataFlag = false;
+			$('#recordButton').css('background-color','#e8e8e8');
 						
 			// var json = JSON.stringify(recordedData);
 			var json = recordedData;
 			var blob = new Blob([json], {type: "application/json"});
+			
+	
 			var url = URL.createObjectURL(blob);
 			
 			var a = document.createElement('a');
@@ -130,7 +132,9 @@
 			a.download = fileName;
 			a.href = url;
 			a.textContent = "Download data as JSON";
-
+			
+			saveAs(blob,fileName);
+	/*
 			
 			var parent = document.getElementById("saveDataDiv");
 			var linkPlace = document.getElementById("saveDataLinkPlace");
@@ -139,7 +143,7 @@
 			linkStuff.id = "saveDataLinkPlace";
 			parent.replaceChild(linkStuff,linkPlace);
 			
-			
+			*/
 			recordedData = []
 		}
 		

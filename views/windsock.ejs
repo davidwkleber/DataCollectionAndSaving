@@ -71,6 +71,11 @@ $output       = $('#output');
                 .on("touchstart", function () {
 					console.log('mouse down');
 					mouseIsDown = "true";
+					last_position = {
+						x : event.touches[0].clientX,
+						y : event.touches[0].clientY
+											
+					}
 				})
 			
 				// $(".awesome-button").on('touchmove', function (event) {
@@ -78,31 +83,40 @@ $output       = $('#output');
 				
 console.log('touchmove in button '+mouseIsDown);
 		
-					if ( mouseIsDown === "true" ) {
+				if ( mouseIsDown === "true" ) {
 										console.log('mouseIsDown == true in touchmove');
 
 					//check to make sure there is data to compare against
 					if (typeof(last_position.x) != 'undefined' ) {
 					//get the change from last position to this position
-					console.log('get mouse location from event first time');
+					console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXget mouse location from event first time');
 
 					var deltaX = last_position.x - event.touches[0].clientX,
 						deltaY = last_position.y - event.touches[0].clientY;
 
-
-			console.log('deltaY: '+deltaY);			
-WSframeToPlay = Math.floor(+WSframeToPlay + +deltaY/3);
+console.log("Frame to Play "+WSframeToPlay);
+				var initialWSfameToPlay = WSframeToPlay;
+				console.log('deltaY: '+deltaY);			
+				WSframeToPlay = Math.floor(+WSframeToPlay + +deltaY/2);
 console.log('Play WS frame: '+WSframeToPlay);
 
-if 	(+WSframeToPlay >= +160) WSframeToPlay = +160;
-if 	(+WSframeToPlay <= +1) WSframeToPlay = +1;
+				if 	(+WSframeToPlay >= +160) WSframeToPlay = +160;
+				if 	(+WSframeToPlay <= +1) WSframeToPlay = +1;
 // WSframeToPlay = Math.floor(WSframeToPlay);		
-console.log('Play WS frame: '+WSframeToPlay);
-WSinstance.gotoAndStop(WSframeToPlay);				
+				console.log('Play WS frame: '+WSframeToPlay);
+// WSinstance.stops([initialWSfameToPlay,WSframeToPlay]);	
+				
+				// WSinstance.stop();
+				WSinstance.gotoAndStop(WSframeToPlay);	
+				// WSinstance.stop();
+				// if (deltaY > 0) WSinstance.play(WSframeToPlay, 1);
+				// else if (deltaY < 0) WSinstance.rewindtoAndStop(WSframeToPlay, 1);
+			
 
 				}
 			} else {
 					console.log('mouseIsDown != true ');
+					WSinstance.stop();
 				}
 							//set the new last position to the current for next time
 					last_position = {

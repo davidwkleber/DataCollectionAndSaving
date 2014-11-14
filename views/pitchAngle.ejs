@@ -61,14 +61,11 @@
  
   </span>
 </div>
- 
 
-	<script src="demos/dist/spriteclip.js"></script>
 
         <script>
 	
 		var hasTouch = (typeof TouchEvent !== "undefined");
-	// 	alert(hasTouch);
 		
 		var PAmouseIsDown = "false";
 		var PAframeToPlay = 1;
@@ -90,6 +87,12 @@ $PAoutput = $('#output');
 					PAinstance.$el.on("touchstart", function () {
  						console.log('PA touch  down');
 						PAmouseIsDown = "true";
+						//check to make sure there is data to compare against
+						PAlast_position = {
+								x : event.touches[0].clientX,
+								y : event.touches[0].clientY
+											
+						}
                 	})
 				} else {
 					PAinstance.$el.on("mousedown", function () {
@@ -101,7 +104,7 @@ $PAoutput = $('#output');
 			//	if (hasTouch) {
 			//	$(".awesome-button").on('touchmove', function (TouchEvent) {
 				PAinstance.$el.on('touchmove', function (TouchEvent) {	
-				
+
 			console.log('PAmouse move');
 					if ( PAmouseIsDown === "true" ) {
 //										console.log('PAmouseIsDown == true');
@@ -139,7 +142,7 @@ PAinstance.gotoAndStop(+PAframeToPlay);
 					if ( PAmouseIsDown === "true" ) {
 //										console.log('PAmouseIsDown == true');
 
-						//check to make sure there is data to compare against
+
 						if (typeof(PAlast_position.x) != 'undefined' ) {
 //							console.log('PAlast_position.x '+PAlast_position.x);
 							//get the change from last position to this position
