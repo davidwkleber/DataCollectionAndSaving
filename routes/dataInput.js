@@ -51,14 +51,14 @@ router.post('/', function(req, res, next){
 
 console.log('dataInput post');
 
-console.log('dataInput value in post: ', req.param('dataInputValue', null));
+console.log('dataInput value in post is now: ', req.param('dataInputValue', null));
 	var dataInputValue = req.param('dataInputValue', null);
-	
+	console.log('dataInput value retrieved is : '+dataInputValue);
+	if (dataInputValue == 'on') 
+		var serialCall = 'AA'+ '\n';
+	else var serialCall = 'S' + '\n';
 
-	 var serialCall = 'AA'+ '\n';
-	// var serialCall = 'S';
-
-	//	console.log('dataInput serialCall: '+serialCall);
+	console.log('dataInput serialCall: '+serialCall);
 	 	res.render('index', {title: 'Wind Lab', seeValue: dataInputValue }); 
 	DIserialListener.write('DI', serialCall);
 

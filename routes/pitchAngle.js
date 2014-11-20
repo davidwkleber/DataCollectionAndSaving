@@ -9,6 +9,7 @@ var PAserialListener = require('../serialListener');
 var express = require('express');
 var router = express.Router();
 
+pitchAngleValue = -9.9;
 
 var lastPitchAngle = '0';
 
@@ -33,7 +34,7 @@ router.post('/', function(req, res, next){
 console.log('pitchAngle post');
 	var forwardOrBack = 'B';
 	var diffAngle = 0;
-	var pitchAngleValue = parseInt(req.param('pitchAngleValue', null));
+	pitchAngleValue = parseInt(req.param('pitchAngleValue', null));
 	if ( pitchAngleValue < lastPitchAngle ) {
 		diffAngle = lastPitchAngle - pitchAngleValue;
 		forwardOrBack = 'F';

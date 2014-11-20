@@ -5,18 +5,8 @@
   <meta charset="utf-8">
   <title>Guages</title>
 <link rel="stylesheet" href="../stylesheets/style.css">
-  <style>
-  input, label {
-    line-height: 1.5em;
-  }
-  </style>
-<style>
-	.recordButtons {
-			position: absolute;
-			left: 1400px; top: 800px;
-		}
 
-</style>
+<script type="text/javascript" src="/javascripts/JSON2CSV.js"></script>
 
   </head>
 
@@ -120,15 +110,17 @@
 						
 			// var json = JSON.stringify(recordedData);
 			var json = recordedData;
-			var blob = new Blob([json], {type: "application/json"});
+		//	var blob = new Blob([json], {type: "application/json"});
 			
+			var csv = JSON2CSV("["+json+"]");
+			var blob = new Blob([csv], {type: "application/csv"});
 	
 			var url = URL.createObjectURL(blob);
 			
 			var a = document.createElement('a');
 			a.id = "saveDataLinkPlace";
 			var date = new Date();
-			var fileName = "data."+date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" "+date.getHours()+"."+date.getMinutes()+".json";
+			var fileName = "data."+date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" "+date.getHours()+"."+date.getMinutes()+".csv";
 			a.download = fileName;
 			a.href = url;
 			a.textContent = "Download data as JSON";

@@ -33,7 +33,7 @@ unsigned long currTime1 = 0;
 unsigned long currTime2 = 0;
 unsigned long meassureTime = 0;
 
-int buad = 9600;
+long buad = 9600;
 
 
 

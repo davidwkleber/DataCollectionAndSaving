@@ -6,42 +6,14 @@
         <meta charset="utf-8">
         <title>WindSock</title>
 
-        <style>
-
-        .awesome-button {
-            display: block;
-            width: 320px;
-            height: 540px;
-            background: url("images/Windsack_final.png") no-repeat 0 0;
-            margin-bottom: 1em;
-			position:absolute;
-			left:10px; top:380px;
-        }
-        .WScurrentFrame {
-			position: absolute;
-			left: 10;
-			top:890px;
-		}   
-		.WSbuttonDiv{
-			position:absolute;
-			left:50px; top:930px;
-		}
-		#WSupButton{
-			width:60px; height: 40px;
-		}
-		#WSdownButton{
-			width:60px; height: 40px;
-		}		
-        </style>
 
     </head>
     <body>
 	
-	<div class="WSbuttonDiv">
+<div class="WSbuttonDiv">
 <span class="WSbuttons">
- <button class="WSupButton" id="WSupButton" name="WSupButton" >/\</button>
-  <button class="WSdownButton" id="WSdownButton" >\/</button>
- 
+	<button class="WSdownButton" id="WSdownButton" >\/</button>
+	<button class="WSupButton" id="WSupButton" name="WSupButton" >/\</button>
   </span>
 </div>
  
@@ -49,20 +21,23 @@
  <form name="windSpeedForm" id"windSpeedForm" class="windSpeedForm" action="/windSpeed" method="post">
 
          <a class="awesome-button"></a>
-        <p class="WScurrentFrame" id="WScurrentFrame" >Wind Speed: <span>1</span></p>
+        <p class="WScurrentValue" id="WScurrentValue" >%Wind Speed: <span>0 %</span></p>
 
         <script>
 var mouseIsDown = "false";
 var WSframeToPlay = 1;
+var WScurrentValue = 0;
+var WSnumFrames = 160;
+
 		//setup a variable to store our last position
 var last_position = {},
 $output       = $('#output');
 
             //Instantiate and get the instance from the element's data-spriteClip property
             var WSinstance = $(".awesome-button").spriteClip({
-                totalFrames: 160,
+                totalFrames: WSnumFrames,
                 frameRate: 60,
-                stops: [1, 160]
+                stops: [1, WSnumFrames]
             }).data("spriteClip");
 
             
@@ -133,7 +108,9 @@ console.log('Play WS frame: '+WSframeToPlay);
            //         WSinstance.stop();
 					event.preventDefault();
 					console.log('client windSpeed: '+WSinstance.currentFrame);
-					var posting = $.post( '/windSpeed', { windSpeedValue: WSinstance.currentFrame } );
+					var posting = $.post( '/windSpeed', { windSpeedValue: WScurrentValue } );
+					                    var valueText = WScurrentValue;				
+					$(".WScurrentValue span").text(valueText+" %");
 					posting.done(function( data ) {
 						console.log('client post done ');
 					})
@@ -141,6 +118,10 @@ console.log('Play WS frame: '+WSframeToPlay);
 
             WSinstance.$dispatcher
                 .on(SpriteClip.Event.ENTER_FRAME, function (e, clip) {
+									WScurrentValue = Math.floor((WSinstance.currentFrame/WSnumFrames)*100);
+
+                    var valueText = WScurrentValue;				
+					$(".WScurrentValue span").text(valueText+" %");
 
                     $(".WScurrentFrame span").text(WSinstance.currentFrame);
                 });
@@ -148,37 +129,48 @@ console.log('Play WS frame: '+WSframeToPlay);
 				
 				
 				$('#WSupButton').click(function(TouchEvent){
-  					event.preventDefault();
-										console.log('client wind speed BUTTON: '+WSinstance.currentFrame);
+				  	event.preventDefault();
 
-					WSinstance.currentFrame += 1;
+					if 	(+WSinstance.currentFrame < +WSnumFrames) {
+
+										console.log('client wind speed BUTTON: '+WSinstance.currentFrame);
+					WSinstance.nextFrame();
+
+					// WSinstance.currentFrame += 1;
 					console.log('client windSpeed BUTTON: '+WSinstance.currentFrame);
 					
-					var posting = $.post( '/windSpeed', { windSpeedValue: WSinstance.currentFrame} );
-										var WScurrentAngle = (WSinstance.currentFrame-100)/10;
+					var posting = $.post( '/windSpeed', { windSpeedValue: WScurrentValue } );
+					WScurrentValue = Math.floor((WSinstance.currentFrame/WSnumFrames)*100);
 										
-					$(".WScurrentAngle span").text(WScurrentAngle);
+					var valueText = WScurrentValue;				
+					$(".WScurrentValue span").text(valueText+" %");
                     $(".WScurrentFrame span").text(WSinstance.currentFrame);
-					WSinstance.nextFrame();
 					posting.done(function( data ) {
 						console.log('client windSpeed post done ');
 					});
+					};
 				});
 			$('#WSdownButton').click(function(TouchEvent){
-  					event.preventDefault();
-					WSinstance.currentFrame -= 1;
-					console.log('client windSpeed BUTTON: '+WSinstance.currentFrame);
-					var posting = $.post( '/winsSpeed', { pitchAngleValue: WSinstance.currentFrame } );
-										var WScurrentAngle = (WSinstance.currentFrame-100)/10;
-										
-									
-					$(".WScurrentAngle span").text(WScurrentAngle);
-                    $(".WScurrentFrame span").text(WSinstance.currentFrame);
+			  	event.preventDefault();
+
+				if 	(WSinstance.currentFrame > 1) {
+
 					WSinstance.prevFrame();
+
+					WScurrentValue = (WSinstance.currentFrame/WSnumFrames)*100;
+
+					console.log('client windSpeed BUTTON: '+WSinstance.currentFrame);
+					var posting = $.post( '/windSpeed', { pitchAngleValue: WSinstance.currentFrame } );
+					WScurrentValue = Math.floor((WSinstance.currentFrame/WSnumFrames)*100);
+										
+					var valueText = WScurrentValue;				
+					$(".WScurrentValue span").text(valueText+" %");
+                    $(".WScurrentFrame span").text(WSinstance.currentFrame);
 					posting.done(function( data ) {
 						console.log('client windSpeed post done ');
 					});
-				});		
+				};
+			});		
 				
 function fixPageXY(e) {
   if (e.pageX == null && e.clientX != null ) {

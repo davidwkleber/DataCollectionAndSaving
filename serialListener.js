@@ -135,73 +135,59 @@ io.sockets.on('connection', function(socket){
  var sendData = '';
  var receivedData = '';
  var chunksIn = 0;
+ 
     DIserialPort.on('data', function(data) {
-	console.log('size of data packet: '+data.length);
-//	console.log('DIserialPort data in is: '+data.toString());
-	chunksIn = chunksIn+1;
-//	console.log('chunksIn: '+chunksIn);
-         receivedData += data.toString();
-	console.log(' ');
-   console.log(' DIserailPort data received: ' + data.toString() );
-   console.log(' ');
+		chunksIn = chunksIn+1;
+        receivedData += data.toString();
+
 			var jsonOpened = receivedData.indexOf('{');
 			var jsonClosed = receivedData.indexOf('}', jsonOpened);
-//			console.log('Opened: '+jsonOpened);
-//			console.log('Closed: '+jsonClosed);
-			if( jsonClosed !== -1 && jsonOpened !== -1 ) {
-			if ( jsonClosed > jsonOpened ) {
-         // if (receivedData .indexOf('{') >= 0 && receivedData .indexOf('}') >= 0) {
-		// sendData = receivedData.substring(receivedData.indexOf('{'), receivedData.indexOf('}')+1);
-			sendData = receivedData.substring(jsonOpened, jsonClosed+1);
-			receivedData = receivedData.substring(jsonClosed+2, receivedData.length);'';
-			chunksIn = 0;
-	   console.log(' DIserailPort Full data received: ' + sendData )
 
-         }
+		if( jsonClosed !== -1 && jsonOpened !== -1 ) {
+			if ( jsonClosed > jsonOpened ) {
+				sendData = receivedData.substring(jsonOpened, jsonClosed+1);
+				receivedData = receivedData.substring(jsonClosed+2, receivedData.length);'';
+				chunksIn = 0;
+			}
 		 }
          // send the incoming data to browser with websockets.
-      if (sendData.length > 0 ) {
-		//	console.log('SEND update data : '+sendData);
-			io.emit('updateData', sendData);
+		if (sendData.length > 0 ) {
+			var now = new Date();
+			var formatNow = now.getDate()+"/"+(now.getMonth()+1)+"/"+now.getFullYear()+'\:'+now.getHours()+'\:'+now.getMinutes()+'\:'+now.getSeconds()+'\:'+now.getMilliseconds();
+		
+			//	console.log('SEND update data : '+sendData);
+			var sendJSON = '{\n  \"date\": \"'+formatNow+'\",';
+			sendJSON += sendData.substring(1, sendData.length-3);
+			sendJSON += ",\n  \"windSpeed\": "+windSpeedValue+",\n";
+			sendJSON += "  \"pitchAngle\": "+pitchAngleValue+",\n";
+			sendJSON += "  \"dummyLoad\": "+dummyLoadValue+"\n";
+			sendJSON += "}";
+			// sendJSON = sendJSON.stringify();
+			console.log( "serialListener send JSON : \n"+sendJSON);	
+
+			io.emit('updateData', sendJSON);
+
+			sendJSON = "";
 			sendData = "";
+			// console.log("in SerialListener: the wind speed: "+windSpeedValue);
+			// console.log("in SerialListener: the pitch angle: "+pitchAngleValue);
+			// console.log("in SerialListener: the dummy load: "+dummyLoadValue);
+
+
 		};
-	   
-		;
 	}); 
  
  
-    //######Version one to receive data
-        // serialPortADC.on('data', function(data) {
-		// console.log('ADC_data received: ' + data);
-        // });
-        
-    //######Version two to receive data with "x" as a delimiter 
+ 
     WSserialPort.on('data', function(data) {
-//		console.log('serialPort on data called');
          receivedData += data.toString();
-   //   if (receivedData .indexOf('x') >= 0) {
-   //    sendData = receivedData .substring(receivedData .indexOf('x') + 1) ;
-    //   receivedData = '';
-    // }
-     // // send the incoming data to browser with websockets.
-   // socketServer.emit('update', sendData);
-   
- //  console.log(comPort+' data received: ' + receivedData + '\n');
-  }); 
-  
-  
-      PAserialPort.on('data', function(data) {
-//		console.log('serialPort on data called');
+	}); 
+    PAserialPort.on('data', function(data) {
          receivedData += data.toString();
-	//	 console.log(comPort + ' data recieved: ' + data.toString());
-  //  console.log(comPort+' data received: ' + receivedData + '\n');
-  }); 
-         DLserialPort.on('data', function(data) {
-//		console.log('serialPort on data called');
+	}); 
+    DLserialPort.on('data', function(data) {
          receivedData += data.toString();
-	//	 console.log(comPort + ' data recieved: ' + data.toString());
-  //  console.log(comPort+' data received: ' + receivedData + '\n');
-  }); 
+	}); 
    
 
 };
@@ -212,12 +198,10 @@ serialListener.doSomething = function() {
 };
 
 serialListener.write = function( id, value ) {
-	console.log('serialListener.write COM: ');
 
      sleep(200, function() {
     }); 
 	
-	console.log('serialListener.write COM: ');
 	console.log('serialListener write value: '+value);
 	if( id === 'w' ) {
 		WSserialPort.write(value, function(err, results) {

@@ -6,16 +6,6 @@
   <title>Guages</title>
 <link rel="stylesheet" href="../stylesheets/style.css">
 </head>
-<style>
-	.DIstartButtonDiv{
-			position: absolute;
-			left: 600px; top: 800px;
-		}
-		.DIstartButton {
-			position: absolute;
-			width: 80px; height: 50px;
-		}
-</style>
 
 <body onLoad="dataInputFunction()">
 
@@ -61,7 +51,17 @@ var dataItem;
 		$('.DIstartButton').on("click", function(event){
 		     //   iosocket.emit('sliderval',3 );
   					event.preventDefault();					
-					var posting = $.post( '/dataInput', { pitchAngleValue: "0" } );
+					var posting = $.post( '/dataInput', { dataInputValue: 'on' } );
+// console.log('dataInputPost now');
+					posting.done(function( data ) {
+//						console.log('client dataInput post done ');
+					});
+				});	
+				
+		$('.DIstopButton').on("click", function(event){
+		     //   iosocket.emit('sliderval',3 );
+  					event.preventDefault();					
+					var posting = $.post( '/dataInput', { dataInputValue: 'off' } );
 // console.log('dataInputPost now');
 					posting.done(function( data ) {
 //						console.log('client dataInput post done ');
@@ -75,13 +75,16 @@ var dataItem;
 <div class=dataInputDiv>
 
 <title><%= title %></title>
-<form name="DIstartButton" id"startButton" class="DIstartButton" action="/dataInput" method="post">
- 
-		
 <div class="DIstartButtonDiv">
- <button class="DIstartButton" id="DIstartButton" name="DIstartButton" >Start Data</button> 
- 
-  </div>
+<form name="DIstartButton" id"startButton" class="DIstartButton" action="/dataInput" method="post"></form>
+	<span><button class="DIstartButton" id="DIstartButton" name="DIstartButton" >Start Data</button> </span>
+</div>
+<div class="DIstopButtonDiv">
+	<form name="DIstopButton" id"stopButton" class="DIstopButton" action="/dataInput" method="post"></form>
+	<span><button class="DIstopButton" id="DIstopButton" name="DIstopButton" >Stop Data</button> </span>
+
+		
+</div>
 </form>
 	</div>
 

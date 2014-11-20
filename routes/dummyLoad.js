@@ -9,6 +9,8 @@ var DLserialListener = require('../serialListener');
 var express = require('express');
 var router = express.Router();
 
+dummyLoadValue = 0;
+
 // middleware specific to this route, logs timestamps
 router.use(function timeLog(req, res, next){
 	console.log('dummyLoad Time: ', Date.now());
@@ -25,7 +27,7 @@ router.post('/', function(req, res, next){
 
 console.log('dummyLoad post');
 console.log('dummyLoad value in post: ', req.param('dummyLoadValue', null));
-	var dummyLoadValue = req.param('dummyLoadValue', null);
+	dummyLoadValue = req.param('dummyLoadValue', null);
 	var serialCallValue = Math.floor((dummyLoadValue-1)*5);
 	
 		console.log(' rounded dummy load: '+serialCallValue);

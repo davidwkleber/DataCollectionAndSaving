@@ -6,42 +6,15 @@
         <meta charset="utf-8">
         <title>Dummy Load</title>
 
-        <style>
-
-        .DLawesome-button {
-            display: block;
-            width: 420px;
-            height: 300px;
-            background: url("images/load.png") no-repeat 0 0;
-            margin-bottom: 1em;
-			position:absolute;
-			left:500px; top:630px;
-        }
-		.DLcurrentFrame {
-			position:absolute;
-			left:640px; top:890px;
-		}
-		.DLbuttonDiv{
-			position:absolute;
-			left:640px; top:930px;
-		}
-		#DLupButton{
-			width:60px; height: 40px;
-		}
-		#DLdownButton{
-			width:60px; height: 40px;
-		}		
-        </style>
 
     </head>
     <body>
-	        <p class="DLcurrentFrame" id="DLcurrentFrame" >Dummy Load: <span>1</span></p>
 
 		<div class="DLbuttonDiv">
 
 			<span class="DLbuttons">
-				<button class="DLupButton" id="DLupButton" name="DLupButton" >/\</button>
 				<button class="DLdownButton" id="DLdownButton" >\/</button>
+				<button class="DLupButton" id="DLupButton" name="DLupButton" >/\</button>
 			</span>
 		</div>
  
@@ -50,20 +23,22 @@
  <form name="dummyLoadForm" id"dummyLoadForm" class="dummyLoadForm" action="/dummyLoad" method="post">
 
          <a class="DLawesome-button"></a>
+	        <p class="DLcurrentValue" id="DLcurrentValue" >Dummy Load: <span>0 %</span></p>
 
         <script>
 var mouseIsDown = "false";
 var DLframeToPlay = 1;
-
+var DLnumFrames = 201;
+var DLcurrentValue = 0;
 		//setup a variable to store our last position
 var last_position = {},
 $output       = $('#output');
 
             //Instantiate and get the instance from the element's data-spriteClip property
             var DLinstance = $(".DLawesome-button").spriteClip({
-                totalFrames: 201,
+                totalFrames: DLnumFrames,
                 frameRate: 60,
-                stops: [201, 1]
+                stops: [DLnumFrames, 1]
             }).data("spriteClip");
 
             DLinstance.$el
@@ -91,7 +66,7 @@ $output       = $('#output');
 						deltaY = DLlast_position.y - event.touches[0].clientY;
 
 DLframeToPlay = Math.floor(DLframeToPlay + deltaY);
-if 	(DLframeToPlay > 201) DLframeToPlay = 201;		
+if 	(DLframeToPlay > DLnumFrames) DLframeToPlay = DLnumFrames;		
 if 	(DLframeToPlay < 1) DLframeToPlay = 1;		
 DLinstance.gotoAndStop(DLframeToPlay);
 
@@ -112,51 +87,68 @@ DLinstance.gotoAndStop(DLframeToPlay);
                     DLinstance.stop();
 					event.preventDefault();
 					console.log('client dummyLoad: '+DLinstance.currentFrame);
-					var posting = $.post( '/dummyLoad', { dummyLoadValue: DLinstance.currentFrame } );
-					posting.done(function( data ) {
+					var posting = $.post( '/dummyLoad', { dummyLoadValue: DLcurrentValue } );
+					var DLvalueText = Math.floor(DLcurrentValue);				
+					$(".DLcurrentValue span").text(DLvalueText+" %")
+				posting.done(function( data ) {
 						console.log('client post done ');
 					})
                 });
 
             DLinstance.$dispatcher
                 .on(SpriteClip.Event.ENTER_FRAME, function (e, clip) {
+					DLcurrentValue = (DLinstance.currentFrame/DLnumFrames)*100;
 
+					var DLvalueText = Math.floor(DLcurrentValue);				
+					$(".DLcurrentValue span").text(DLvalueText+" %");
                     $(".DLcurrentFrame span").text(DLinstance.currentFrame);
                 });
 							
 				
 				$('#DLupButton').click(function(TouchEvent){
-  					event.preventDefault();
-										console.log('client dummyLoad BUTTON: '+DLinstance.currentFrame);
+					// keep from having the button make the post request
+				  	event.preventDefault();
 
-					DLinstance.currentFrame += 1;
+					if 	(+DLinstance.currentFrame < +DLnumFrames) {
+
+										console.log('client dummyLoad BUTTON: '+DLinstance.currentFrame);
+					DLinstance.nextFrame();
+
+					DLcurrentValue = (DLinstance.currentFrame/DLnumFrames)*100;
+
 					console.log('client dummyLoad BUTTON: '+DLinstance.currentFrame);
 					
-					var posting = $.post( '/dummyLoad', { dummyLoad: DLinstance.currentFrame} );
-										var DLcurrentAngle = (DLinstance.currentFrame-100)/10;
-										
-					$(".DLcurrentAngle span").text(DLcurrentAngle);
+					var posting = $.post( '/dummyLoad', { dummyLoad: DLcurrentValue } );
+					
+					var DLvalueText = Math.floor(DLcurrentValue);				
+					$(".DLcurrentValue span").text(DLvalueText+" %");
                     $(".DLcurrentFrame span").text(DLinstance.currentFrame);
-					DLinstance.nextFrame();
 					posting.done(function( data ) {
 						console.log('client dummyLoad post done ');
 					});
+					};
 				});
 			$('#DLdownButton').click(function(TouchEvent){
-  					event.preventDefault();
-					DLinstance.currentFrame -= 1;
-					console.log('client dummyLoad BUTTON: '+DLinstance.currentFrame);
-					var posting = $.post( '/dummyLoad', { dummyLoad: DLinstance.currentFrame } );
-										var DLcurrentAngle = (DLinstance.currentFrame-100)/10;
-										
-									
-					$(".DLcurrentAngle span").text(DLcurrentAngle);
-                    $(".DLcurrentFrame span").text(DLinstance.currentFrame);
+			  	// keep from having the button make the post request
+				event.preventDefault();
+
+				if 	(DLinstance.currentFrame > 1) {
+
 					DLinstance.prevFrame();
+					
+					DLcurrentValue = (DLinstance.currentFrame/DLnumFrames)*100;
+
+					console.log('client dummyLoad BUTTON: '+DLinstance.currentFrame);
+					var posting = $.post( '/dummyLoad', { dummyLoad: DLcurrentValue } );										
+				
+					var DLvalueText = Math.floor(DLcurrentValue);				
+					$(".DLcurrentValue span").text(DLvalueText+" %");
+                    $(".DLcurrentFrame span").text(DLinstance.currentFrame);
 					posting.done(function( data ) {
 						console.log('client dummyLoad post done ');
 					});
-				});		
+				};
+			});		
 					
 				
 function fixPageXY(e) {

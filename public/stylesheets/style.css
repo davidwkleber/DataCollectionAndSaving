@@ -17,8 +17,147 @@ a {
   color: #00B7FF;
 }
 
+/*
+	Settings for Wind Speed
+		views/windsock.ejs
+*/
 
- 
+        .awesome-button {
+            display: block;
+            width: 320px;
+            height: 540px;
+            background: url("../images/Windsack_final.png") no-repeat 0 0;
+            margin-bottom: 1em;
+			position:absolute;
+			left:10px; top:380px;
+        }
+        .WScurrentValue {
+			position: absolute;
+			left: 10;
+			top:890px;
+		}   
+		.WSbuttonDiv{
+			position:absolute;
+			left:50px; top:930px;
+		}
+		#WSupButton{
+			width:60px; height: 40px;
+		}
+		#WSdownButton{
+			width:60px; height: 40px;
+		}		
+
+
+/*
+	Settings for Pitch Angle 
+		views/pitchAngle.ejs
+*/
+        .pitchAngle-button {
+            display: block;
+            width: 280px;
+            height: 540px;
+            background: url("../images/Pitch_final.png") no-repeat 0 0;
+            margin-bottom: 1em;
+           
+			position:absolute;
+			left:330px; top:315px;
+        }
+        .PAcurrentFrame {
+			position:absolute;
+			left:390px; top:105px;
+		}
+		
+		.PAcurrentAngle {
+			position:absolute;
+			left:340px; top:890px;
+		}
+		.PAbuttonDiv{
+			position:absolute;
+			left:340px; top:930px;
+		}
+		#PAupButton{
+			width:60px; height: 40px;
+		}
+		#PAdownButton{
+			width:60px; height: 40px;
+		}		
+		.pitchAngelDiv {
+			position:absolute;
+			left:330px; top:100px;
+		}
+ /*
+	Settings for Dummy Load
+		views/dummyLoad.ejs
+*/
+        .DLawesome-button {
+            display: block;
+            width: 420px;
+            height: 300px;
+            background: url("../images/load.png") no-repeat 0 0;
+            margin-bottom: 1em;
+			position:absolute;
+			left:500px; top:630px;
+        }
+		.DLcurrentValue {
+			position:absolute;
+			left:640px; top:890px;
+		}
+		.DLbuttonDiv{
+			position:absolute;
+			left:640px; top:930px;
+		}
+		#DLupButton{
+			width:60px; height: 40px;
+		}
+		#DLdownButton{
+			width:60px; height: 40px;
+		}		
+
+/*
+	Settings for Data Collection
+		views/dataInput.csf
+*/
+	.DIstartButtonDiv{
+			position: absolute;
+			left: 600px; top: 750px;
+		}
+		.DIstopButtonDiv{
+			position: absolute;
+			left: 700px; top: 750px;
+		}
+		.DIstartButton {
+			width: 80px; height: 50px;
+		}
+		.DIstopButton {
+			width: 80px; height: 50px;
+		}
+
+/* 
+	Settings for Gauges
+		views/gauges.ejs
+*/
+ 		.guageDiv {
+			position:absolute;
+			left:630px; top:650px;
+		}
+
+/*
+	settings for D3JS line graph, 
+		views/lineGraph.ejs
+*/
+
+/* For Data Selection Buttons */
+
+  input, label {
+    line-height: 1.5em;
+  }
+
+	.graphSelectButtons {
+			position: absolute;
+			left: 1000px; top: 800px;
+		}
+
+		/* for Line Graph itself */
 svg {
   font: 10px sans-serif;
 }
@@ -60,3 +199,17 @@ svg {
 		width: 700px;
 	}
 	
+	
+/*
+	Settings for record functions
+		views/record.ejs
+*/
+  input, label {
+    line-height: 1.5em;
+  }
+
+	.recordButtons {
+			position: absolute;
+			left: 1400px; top: 800px;
+		}
+

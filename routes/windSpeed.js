@@ -9,6 +9,8 @@ var WSserialListener = require('../serialListener');
 var express = require('express');
 var router = express.Router();
 
+windSpeedValue = 0;
+
 // middleware specific to this route, logs timestamps
 router.use(function timeLog(req, res, next){
 	console.log('windSpeed Time: ', Date.now());
@@ -25,8 +27,9 @@ router.post('/', function(req, res, next){
 
 console.log('windSpeed post');
 console.log('windSpeed value in post: ', req.param('windSpeedValue', null));
-	var windSpeedValue = req.param('windSpeedValue', null);
-	var serialCallValue = Math.floor(windSpeedValue*0.625);
+	windSpeedValue = req.param('windSpeedValue', null);
+	// var serialCallValue = Math.floor(windSpeedValue*0.625);
+	var serialCallValue = Math.floor(windSpeedValue);
 		console.log(' rounded wind speed: '+serialCallValue);
 
 	if( serialCallValue < 0 ) {
