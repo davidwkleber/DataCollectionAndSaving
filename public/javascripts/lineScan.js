@@ -5,7 +5,7 @@ var n = 40,
  
 var margin = {top: 20, right: 20, bottom: 20, left: 50},
 	width = 700 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    height = 300 - margin.top - margin.bottom;
  
 var x = d3.scale.linear()
     .domain([0, n - 1])

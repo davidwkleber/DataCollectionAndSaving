@@ -162,8 +162,8 @@ io.sockets.on('connection', function(socket){
 			sendJSON += "  \"pitchAngle\": "+pitchAngleValue+",\n";
 			sendJSON += "  \"dummyLoad\": "+dummyLoadValue+"\n";
 			sendJSON += "}";
-			// sendJSON = sendJSON.stringify();
-			console.log( "serialListener send JSON : \n"+sendJSON);	
+			
+			// console.log( "serialListener send JSON : \n"+sendJSON);	
 
 			io.emit('updateData', sendJSON);
 

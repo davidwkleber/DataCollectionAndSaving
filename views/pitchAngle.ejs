@@ -16,15 +16,22 @@
          <a class="pitchAngle-button"></a>
 		<p class="PAcurrentAngle" name="PAcurrentAngle" id="PAcurrentAngle">Pitch Angle: <span>-9.9</span></p>
 	
+
+
 <div class="PAbuttonDiv">
 <span class="PAbuttons">
   <button class="PAdownButton" id="PAdownButton" >\/</button>
  <button class="PAupButton" id="PAupButton" name="PAupButton" >/\</button>
- 
   </span>
+ 
 </div>
 
-
+ <div class="PAinitDiv" id="PAinitDiv" name="PAinitDiv">
+	<form>
+		<input type="radio" class="PAinitButton" name="PAinitButton" value="on">Init On<br>
+		<input type="radio" class="PAinitButton" name="PAinitButton" value="off" checked="true">Init Off
+	</form>
+</div>
         <script>
 	
 		var hasTouch = (typeof TouchEvent !== "undefined");
@@ -32,6 +39,7 @@
 		var PAmouseIsDown = "false";
 		var PAframeToPlay = 1;
 		var PAnumFrames = 600;
+		var PAinitSelection = "off";
 		
 		//setup a variable to store our last position
 var PAlast_position = {},
@@ -97,39 +105,7 @@ PAinstance.gotoAndStop(+PAframeToPlay);
 					}
             
 			}) 
-			/*
-			} else {
-				$(".awesome-button").on('mousemove', function (event) {
-				// PAinstance.$el.on("mousemove", function (event) {
-//					console.log('PAmouse move');
-					if ( PAmouseIsDown === "true" ) {
-//										console.log('PAmouseIsDown == true');
 
-
-						if (typeof(PAlast_position.x) != 'undefined' ) {
-//							console.log('PAlast_position.x '+PAlast_position.x);
-							//get the change from last position to this position
-				
-							var PAdeltaX = PAlast_position.x - event.clientX,
-								PAdeltaY = PAlast_position.y - event.clientY;
-
-PAframeToPlay = PAframeToPlay + PAdeltaY;
-if 	(PAframeToPlay > 600) PAframeToPlay = 600;		
-if 	(PAframeToPlay < 1) PAframeToPlay = 1;		
-PAinstance.gotoAndStop(PAframeToPlay);	
-
-						}
-					} else {
-//					console.log('PAmouseIsDown != true ');
-					}
-							//set the new last position to the current for next time
-					PAlast_position = {
-						x : event.clientX,
-						y : event.clientY
-					}
-            
-			}) } 
-			*/
 			if (hasTouch) {
                 PAinstance.$el.on("touchend", function () {
 					PAmouseIsDown = "false";
@@ -163,6 +139,11 @@ PAinstance.gotoAndStop(PAframeToPlay);
 				
 			$('#PAupButton').click(function(event){
 			  	event.preventDefault();
+				if( PAinitSelection == "on" ) {
+									console.log("PA init Forward");
+
+					var posting = $.post( '/pitchAngle', { pitchAngleValue: 1000} );
+				} else {
 
 				if (PAinstance.currentFrame < PAnumFrames ) {
 					PAinstance.nextFrame();
@@ -180,12 +161,20 @@ PAinstance.gotoAndStop(PAframeToPlay);
 						console.log('client pitchAngle post done ');
 					});
 				};
+				};
 			});
 			$('#PAdownButton').click(function(event){
 			  	// discovered that this preventDefault MUST be called, 
 				// else the /pitchAngle post (get?) goes through anyway, 
 				event.preventDefault();
+				if( PAinitSelection == "on" ) {
+					console.log("PA init back");
 
+					var posting = $.post( '/pitchAngle', { pitchAngleValue: -550} );
+											
+					$(".PAcurrentAngle span").text(PAcurrentAngle);
+                    $(".PAcurrentFrame span").text(PAinstance.currentFrame);
+				} else {
 				if (PAinstance.currentFrame > 1 ) {
 
 					PAinstance.prevFrame();
@@ -201,7 +190,26 @@ PAinstance.gotoAndStop(PAframeToPlay);
 						console.log('client pitchAngle post done ');
 					});
 				};
+				};
 			});
+			
+					
+		$( ".PAinitButton" ).on( "click", function() {
+
+			console.log("INIT ON");
+				PAinitSelection = $(".PAinitButton:checked").val();
+				console.log("init on? "+PAinitSelection);
+				if (PAinitSelection === "on") {
+					console.log("INIT ON");
+				} else {
+													PAinstance.currentFrame = 1;
+					PAcurrentAngle = (PAinstance.currentFrame-100)/10;
+					PAinstance.gotoAndStop(1);							
+					$(".PAcurrentAngle span").text(PAcurrentAngle);
+                    $(".PAcurrentFrame span").text(PAinstance.currentFrame);
+				}
+		 });
+							 
         </script>
 		
  </form>

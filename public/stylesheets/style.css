@@ -75,6 +75,10 @@ a {
 			position:absolute;
 			left:340px; top:930px;
 		}
+		.PAinitDiv{
+			position:absolute;
+			left:500px; top:930px;
+		}
 		#PAupButton{
 			width:60px; height: 40px;
 		}
@@ -119,11 +123,11 @@ a {
 */
 	.DIstartButtonDiv{
 			position: absolute;
-			left: 600px; top: 750px;
+			left: 400px; top: 750px;
 		}
 		.DIstopButtonDiv{
 			position: absolute;
-			left: 700px; top: 750px;
+			left: 500px; top: 750px;
 		}
 		.DIstartButton {
 			width: 80px; height: 50px;
@@ -154,7 +158,7 @@ a {
 
 	.graphSelectButtons {
 			position: absolute;
-			left: 1000px; top: 800px;
+			left: 1300px; top: 900px;
 		}
 
 		/* for Line Graph itself */
@@ -195,8 +199,9 @@ svg {
 	.lineGraphDiv {
 		position: absolute;
 		left: 1000px;
-		top: 150px;
+		top: 450px;
 		width: 700px;
+		height: 300px;
 	}
 	
 	
@@ -210,6 +215,6 @@ svg {
 
 	.recordButtons {
 			position: absolute;
-			left: 1400px; top: 800px;
+			left: 1650px; top: 900px;
 		}
 

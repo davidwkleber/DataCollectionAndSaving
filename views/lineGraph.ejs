@@ -45,12 +45,12 @@
 		console.log('what the f');
 		var dataSelected = 'power';
 		
-			$( "input" ).on( "click", function() {
+			$( ".dataSelectorRadio" ).on( "click", function() {
 
 	//		$("#selectedData").html($( "input:checked" ).val() + " is checked!" );
-						$("#lineGraphTitle").html($( "input:checked" ).val() );
+						$("#lineGraphTitle").html($( ".dataSelectorRadio:checked" ).val() );
 
-			 dataSelected = $("input:checked").val();
+			 dataSelected = $(".dataSelectorRadio:checked").val();
 		//	console.log('dataSelected item is: '+dataSelected);
 		});	
 						var dataItem;

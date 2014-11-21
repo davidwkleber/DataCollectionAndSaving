@@ -34,19 +34,29 @@ router.post('/', function(req, res, next){
 console.log('pitchAngle post');
 	var forwardOrBack = 'B';
 	var diffAngle = 0;
+	var serialValue = 0;
 	pitchAngleValue = parseInt(req.param('pitchAngleValue', null));
+	if (pitchAngleValue = 1000 ) {
+			forwardOrBack = 'B';
+			serialValue = Math.floor(pitchAngleValue);
+	} else if ( pitchAngleValue = -500 ) {
+			forwardOrBack = 'F';
+			serialValue = Math.floor(pitchAngleValue);
+	} else 
 	if ( pitchAngleValue < lastPitchAngle ) {
 		diffAngle = lastPitchAngle - pitchAngleValue;
 		forwardOrBack = 'F';
 		console.log('F by '+diffAngle);
+		serialValue = Math.floor(diffAngle * 13.3);
+
 	} else {
 		diffAngle = pitchAngleValue - lastPitchAngle;
 		console.log('B by '+diffAngle);
+		serialValue = Math.floor(diffAngle * 13.3);
 	}
 	console.log('lastPitchAngle in PA.js '+lastPitchAngle);
 	console.log('pitchAngleValue in PA.js '+pitchAngleValue);
 	console.log('diff angle: '+diffAngle);
-	var serialValue = Math.floor(diffAngle * 13.3);
 	console.log('Set the value to in PA.js '+serialValue);
 
 	// var spinnerValue = req.body.pitchAngleSliderValue;
