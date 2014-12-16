@@ -24,9 +24,9 @@ a {
 
         .awesome-button {
             display: block;
-            width: 320px;
+            width: 190px;
             height: 540px;
-            background: url("../images/Windsack_final.png") no-repeat 0 0;
+            background: url("../images/20141120_190x540_160frames_windsack.png") no-repeat 0 0;
             margin-bottom: 1em;
 			position:absolute;
 			left:10px; top:380px;
@@ -93,14 +93,25 @@ a {
 	Settings for Dummy Load
 		views/dummyLoad.ejs
 */
+
+		.DummyLoadDiv {
+			width: 420px;
+			height: 100px;
+		}
+	
         .DLawesome-button {
             display: block;
-            width: 420px;
-            height: 300px;
-            background: url("../images/load.png") no-repeat 0 0;
+			
+            width: 294px;
+            height: 179px;
+			
+            background: url("../images/20141202_294x179_201_load.png") no-repeat 0 0;
+						/* background-size: 100%, 100%;
+						*/
+
             margin-bottom: 1em;
 			position:absolute;
-			left:500px; top:630px;
+			left:580px; top:700px;
         }
 		.DLcurrentValue {
 			position:absolute;
