@@ -169,8 +169,8 @@ PAinstance.gotoAndStop(+PAframeToPlay);
 				event.preventDefault();
 				if( PAinitSelection == "on" ) {
 					console.log("PA init back");
-
-					var posting = $.post( '/pitchAngle', { pitchAngleValue: -550} );
+					var pitchAngleValueInitBack = -550;
+					var posting = $.post( '/pitchAngle', { pitchAngleValue: pitchAngleValueInitBack } );
 											
 					$(".PAcurrentAngle span").text(PAcurrentAngle);
                     $(".PAcurrentFrame span").text(PAinstance.currentFrame);

@@ -35,11 +35,14 @@ console.log('pitchAngle post');
 	var forwardOrBack = 'B';
 	var diffAngle = 0;
 	var serialValue = 0;
-	pitchAngleValue = parseInt(req.param('pitchAngleValue', null));
+	pitchAngleValue = req.param('pitchAngleValue', null);
+		console.log('pitchAngleValue param in PA.js '+ req.param('pitchAngleValue', null));
+		console.log('pitchAngleValue value  in PA.js '+ pitchAngleValue);
+
 	if (pitchAngleValue = 1000 ) {
 			forwardOrBack = 'B';
 			serialValue = Math.floor(pitchAngleValue);
-	} else if ( pitchAngleValue = -500 ) {
+	} else if ( pitchAngleValue = -550 ) {
 			forwardOrBack = 'F';
 			serialValue = Math.floor(pitchAngleValue);
 	} else 
@@ -58,8 +61,7 @@ console.log('pitchAngle post');
 	console.log('pitchAngleValue in PA.js '+pitchAngleValue);
 	console.log('diff angle: '+diffAngle);
 	console.log('Set the value to in PA.js '+serialValue);
-
-	// var spinnerValue = req.body.pitchAngleSliderValue;
+console.log('serialValue '+serialValue);
 	// This is for the real wind tower
 	var setPAValue = forwardOrBack+serialValue;
 		

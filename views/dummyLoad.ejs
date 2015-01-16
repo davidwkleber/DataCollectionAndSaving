@@ -117,8 +117,9 @@ DLinstance.gotoAndStop(DLframeToPlay);
 					DLcurrentValue = (DLinstance.currentFrame/DLnumFrames)*100;
 
 					console.log('client dummyLoad BUTTON: '+DLinstance.currentFrame);
-					
-					var posting = $.post( '/dummyLoad', { dummyLoad: DLcurrentValue } );
+					console.log('client dummyLoad BUTTON: '+DLcurrentValue);
+
+					var posting = $.post( '/dummyLoad', { dummyLoadValue: DLcurrentValue } );
 					
 					var DLvalueText = Math.floor(DLcurrentValue);				
 					$(".DLcurrentValue span").text(DLvalueText+" %");
@@ -138,8 +139,9 @@ DLinstance.gotoAndStop(DLframeToPlay);
 					
 					DLcurrentValue = (DLinstance.currentFrame/DLnumFrames)*100;
 
-					console.log('client dummyLoad BUTTON: '+DLinstance.currentFrame);
-					var posting = $.post( '/dummyLoad', { dummyLoad: DLcurrentValue } );										
+					console.log('client dummyLoad BUTTON: '+DLcurrentValue);
+					
+					var posting = $.post( '/dummyLoad', { dummyLoadValue: DLcurrentValue } );										
 				
 					var DLvalueText = Math.floor(DLcurrentValue);				
 					$(".DLcurrentValue span").text(DLvalueText+" %");

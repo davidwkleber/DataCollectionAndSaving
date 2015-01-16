@@ -26,6 +26,7 @@ console.log('dummyLoad get');
 router.post('/', function(req, res, next){
 
 console.log('dummyLoad post');
+
 console.log('dummyLoad value in post: ', req.param('dummyLoadValue', null));
 	dummyLoadValue = req.param('dummyLoadValue', null);
 	var serialCallValue = Math.floor((dummyLoadValue-1)*5);
