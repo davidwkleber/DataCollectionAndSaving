@@ -142,7 +142,7 @@ PAinstance.gotoAndStop(+PAframeToPlay);
 				if( PAinitSelection == "on" ) {
 									console.log("PA init Forward");
 
-					var posting = $.post( '/pitchAngle', { pitchAngleValue: 1000} );
+					var posting = $.post( '/pitchAngle', { pitchAngleValue: "up" } );
 				} else {
 
 				if (PAinstance.currentFrame < PAnumFrames ) {
@@ -169,8 +169,7 @@ PAinstance.gotoAndStop(+PAframeToPlay);
 				event.preventDefault();
 				if( PAinitSelection == "on" ) {
 					console.log("PA init back");
-					var pitchAngleValueInitBack = -550;
-					var posting = $.post( '/pitchAngle', { pitchAngleValue: pitchAngleValueInitBack } );
+					var posting = $.post( '/pitchAngle', { pitchAngleValue: "down" } );
 											
 					$(".PAcurrentAngle span").text(PAcurrentAngle);
                     $(".PAcurrentFrame span").text(PAinstance.currentFrame);

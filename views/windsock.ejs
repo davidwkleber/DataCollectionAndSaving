@@ -138,7 +138,9 @@ console.log('Play WS frame: '+WSframeToPlay);
 
 					// WSinstance.currentFrame += 1;
 					console.log('client windSpeed BUTTON: '+WSinstance.currentFrame);
-					
+										
+					WScurrentValue = (WSinstance.currentFrame/WSnumFrames)*100;
+
 					var posting = $.post( '/windSpeed', { windSpeedValue: WScurrentValue } );
 					WScurrentValue = Math.floor((WSinstance.currentFrame/WSnumFrames)*100);
 										
@@ -160,7 +162,7 @@ console.log('Play WS frame: '+WSframeToPlay);
 					WScurrentValue = (WSinstance.currentFrame/WSnumFrames)*100;
 
 					console.log('client windSpeed BUTTON: '+WSinstance.currentFrame);
-					var posting = $.post( '/windSpeed', { pitchAngleValue: WSinstance.currentFrame } );
+					var posting = $.post( '/windSpeed', { windSpeedValue: WScurrentValue } );
 					WScurrentValue = Math.floor((WSinstance.currentFrame/WSnumFrames)*100);
 										
 					var valueText = WScurrentValue;				

@@ -32,31 +32,43 @@ router.post('/', function(req, res, next){
 
 	// deterine if the movement is forward or backwards, based upon the 
 console.log('pitchAngle post');
-	var forwardOrBack = 'B';
+	var forwardOrBack = 'F';
 	var diffAngle = 0;
 	var serialValue = 0;
 	pitchAngleValue = req.param('pitchAngleValue', null);
 		console.log('pitchAngleValue param in PA.js '+ req.param('pitchAngleValue', null));
 		console.log('pitchAngleValue value  in PA.js '+ pitchAngleValue);
+			console.log('? by Pitch Angle '+pitchAngleValue);
+		console.log('? by last Pitch Angle '+lastPitchAngle);
 
-	if (pitchAngleValue = 1000 ) {
-			forwardOrBack = 'B';
-			serialValue = Math.floor(pitchAngleValue);
-	} else if ( pitchAngleValue = -550 ) {
+	if (pitchAngleValue == "down" ) {
 			forwardOrBack = 'F';
-			serialValue = Math.floor(pitchAngleValue);
+			serialValue = Math.floor(1000);
+			pitchAngleValue = 0;
+	} else if ( pitchAngleValue == "up" ) {
+			forwardOrBack = 'B';
+			serialValue = Math.floor(1000);
+			pitchAngleValue = 0;
 	} else 
-	if ( pitchAngleValue < lastPitchAngle ) {
-		diffAngle = lastPitchAngle - pitchAngleValue;
+	if ( +pitchAngleValue < +lastPitchAngle ) {
+					console.log('F by Pitch Angle '+pitchAngleValue);
+		console.log('F by last Pitch Angle '+lastPitchAngle);
+		diffAngle = Math.abs(lastPitchAngle - pitchAngleValue);
 		forwardOrBack = 'F';
 		console.log('F by '+diffAngle);
 		serialValue = Math.floor(diffAngle * 13.3);
 
 	} else {
-		diffAngle = pitchAngleValue - lastPitchAngle;
+		forwardOrBack = 'B';
+		diffAngle = Math.abs(pitchAngleValue-lastPitchAngle);
+				console.log('B by Pitch Angle '+pitchAngleValue);
+		console.log('B by last Pitch Angle '+lastPitchAngle);
+
+		//diffAngle = lastPitchAngle - pitchAngleValue;;
 		console.log('B by '+diffAngle);
 		serialValue = Math.floor(diffAngle * 13.3);
 	}
+	
 	console.log('lastPitchAngle in PA.js '+lastPitchAngle);
 	console.log('pitchAngleValue in PA.js '+pitchAngleValue);
 	console.log('diff angle: '+diffAngle);
