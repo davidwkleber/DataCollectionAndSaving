@@ -21,11 +21,11 @@
  <form name="windSpeedForm" id"windSpeedForm" class="windSpeedForm" action="/windSpeed" method="post">
 
          <a class="awesome-button"></a>
-        <p class="WScurrentValue" id="WScurrentValue" >%Wind Speed: <span>0 %</span></p>
+        <p class="WScurrentValue" id="WScurrentValue" >Wind Speed: <span>0 m/s</span></p>
 
         <script>
 var mouseIsDown = "false";
-var WSframeToPlay = 1;
+var WSframeToPlay = 6;
 var WScurrentValue = 0;
 var WSnumFrames = 160;
 
@@ -37,12 +37,12 @@ $output       = $('#output');
             var WSinstance = $(".awesome-button").spriteClip({
                 totalFrames: WSnumFrames,
                 frameRate: 60,
-                stops: [1, WSnumFrames]
+                stops: [6, WSnumFrames]
             }).data("spriteClip");
+WSinstance.currentFrame = WSframeToPlay;
 
             
             WSinstance.$el
-
                 .on("touchstart", function () {
 					console.log('mouse down');
 					mouseIsDown = "true";
@@ -76,7 +76,7 @@ console.log("Frame to Play "+WSframeToPlay);
 console.log('Play WS frame: '+WSframeToPlay);
 
 				if 	(+WSframeToPlay >= +160) WSframeToPlay = +160;
-				if 	(+WSframeToPlay <= +1) WSframeToPlay = +1;
+				if 	(+WSframeToPlay <= +6) WSframeToPlay = +6;
 // WSframeToPlay = Math.floor(WSframeToPlay);		
 				console.log('Play WS frame: '+WSframeToPlay);
 // WSinstance.stops([initialWSfameToPlay,WSframeToPlay]);	
@@ -107,10 +107,16 @@ console.log('Play WS frame: '+WSframeToPlay);
 
            //         WSinstance.stop();
 					event.preventDefault();
+					WScurrentValue = (WSinstance.currentFrame/WSnumFrames)*100;
+
 					console.log('client windSpeed: '+WSinstance.currentFrame);
 					var posting = $.post( '/windSpeed', { windSpeedValue: WScurrentValue } );
-					                    var valueText = WScurrentValue;				
-					$(".WScurrentValue span").text(valueText+" %");
+					
+					var valueText = (WScurrentValue*0.1456)-0.5523;	
+					valueText =  +(Math.round(valueText +"e+1")+"e-1");
+					
+				
+					$(".WScurrentValue span").text(valueText+" m/s");
 					posting.done(function( data ) {
 						console.log('client post done ');
 					})
@@ -118,10 +124,13 @@ console.log('Play WS frame: '+WSframeToPlay);
 
             WSinstance.$dispatcher
                 .on(SpriteClip.Event.ENTER_FRAME, function (e, clip) {
-									WScurrentValue = Math.floor((WSinstance.currentFrame/WSnumFrames)*100);
+					
+					WScurrentValue = (WSinstance.currentFrame/WSnumFrames)*100;
 
-                    var valueText = WScurrentValue;				
-					$(".WScurrentValue span").text(valueText+" %");
+					var valueText = (WScurrentValue*0.1456)-0.5523;	
+					valueText =  +(Math.round(valueText +"e+1")+"e-1");
+					
+					$(".WScurrentValue span").text(valueText+" m/s");
 
                     $(".WScurrentFrame span").text(WSinstance.currentFrame);
                 });
@@ -142,10 +151,10 @@ console.log('Play WS frame: '+WSframeToPlay);
 					WScurrentValue = (WSinstance.currentFrame/WSnumFrames)*100;
 
 					var posting = $.post( '/windSpeed', { windSpeedValue: WScurrentValue } );
-					WScurrentValue = Math.floor((WSinstance.currentFrame/WSnumFrames)*100);
 										
-					var valueText = WScurrentValue;				
-					$(".WScurrentValue span").text(valueText+" %");
+					var valueText = (WScurrentValue*0.1456)-0.5523;	
+					valueText =  +(Math.round(valueText +"e+1")+"e-1");
+					$(".WScurrentValue span").text(valueText+" m/s");
                     $(".WScurrentFrame span").text(WSinstance.currentFrame);
 					posting.done(function( data ) {
 						console.log('client windSpeed post done ');
@@ -155,7 +164,7 @@ console.log('Play WS frame: '+WSframeToPlay);
 			$('#WSdownButton').click(function(TouchEvent){
 			  	event.preventDefault();
 
-				if 	(WSinstance.currentFrame > 1) {
+				if 	(WSinstance.currentFrame > 6) {
 
 					WSinstance.prevFrame();
 
@@ -163,10 +172,12 @@ console.log('Play WS frame: '+WSframeToPlay);
 
 					console.log('client windSpeed BUTTON: '+WSinstance.currentFrame);
 					var posting = $.post( '/windSpeed', { windSpeedValue: WScurrentValue } );
-					WScurrentValue = Math.floor((WSinstance.currentFrame/WSnumFrames)*100);
 										
-					var valueText = WScurrentValue;				
-					$(".WScurrentValue span").text(valueText+" %");
+					var valueText = (WScurrentValue*0.1456)-0.5523;	
+					valueText =  +(Math.round(valueText +"e+1")+"e-1");
+
+					
+					$(".WScurrentValue span").text(valueText+" m/s");
                     $(".WScurrentFrame span").text(WSinstance.currentFrame);
 					posting.done(function( data ) {
 						console.log('client windSpeed post done ');
@@ -185,8 +196,7 @@ function fixPageXY(e) {
     e.pageY -= html.clientTop || 0
   }
 }
-
-				
+		
 				
         </script>
  </form>
