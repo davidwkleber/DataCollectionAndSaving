@@ -16,7 +16,13 @@ bodyDiv {
 a {
   color: #00B7FF;
 }
-
+ /* settings for infoFrame */
+	#infoFrame {
+		position: absolute;
+		left: 900px; top: 30px;
+		width: 900px;
+		height: 450px;
+	}
 /*
 	Settings for Wind Speed
 		views/windsock.ejs

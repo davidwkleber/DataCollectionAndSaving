@@ -9,7 +9,7 @@ var PAserialListener = require('../serialListener');
 var express = require('express');
 var router = express.Router();
 
-pitchAngleValue = -9.9;
+pitchAngleValue = 1;
 
 var lastPitchAngle = '0';
 

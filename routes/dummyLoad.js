@@ -9,7 +9,7 @@ var DLserialListener = require('../serialListener');
 var express = require('express');
 var router = express.Router();
 
-dummyLoadValue = 0;
+dummyLoadValue = 1;
 
 // middleware specific to this route, logs timestamps
 router.use(function timeLog(req, res, next){

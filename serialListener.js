@@ -155,12 +155,29 @@ io.sockets.on('connection', function(socket){
 			var now = new Date();
 			var formatNow = now.getDate()+"/"+(now.getMonth()+1)+"/"+now.getFullYear()+'\:'+now.getHours()+'\:'+now.getMinutes()+'\:'+now.getSeconds()+'\:'+now.getMilliseconds();
 		
+		/* use the same calculation for changin wind speed % to a m/s value
+			this is from windsock.ejs. 
+			Not the best I know, but hope it works, otherwise windSpeedValue was a percentage...
+		*/
+		var windSpeedValueText = (windSpeedValue*0.1456)-0.5523;
+		windSpeedValueText =  +(Math.round(windSpeedValueText +"e+1")+"e-1");
+		
+		/* do the same for the pitch angle.
+		*/
+		var pitchAngleValueText = (pitchAngleValue-100)/10;
+		
+		/* and dummy load
+			NOTE, the magic number 201 is from DLnumFrames in the dummyLoad.ejs file
+		*/
+		var dummyLoadValueText = ((dummyLoadValue-1)/201)*100;
+		dummyLoadValueText =  +(Math.round(dummyLoadValueText +"e+1")+"e-1");
+		
 			//	console.log('SEND update data : '+sendData);
 			var sendJSON = '{\n  \"date\": \"'+formatNow+'\",';
 			sendJSON += sendData.substring(1, sendData.length-3);
-			sendJSON += ",\n  \"windSpeed\": "+windSpeedValue+",\n";
-			sendJSON += "  \"pitchAngle\": "+pitchAngleValue+",\n";
-			sendJSON += "  \"dummyLoad\": "+dummyLoadValue+"\n";
+			sendJSON += ",\n  \"windSpeed\": "+windSpeedValueText+",\n";
+			sendJSON += "  \"pitchAngle\": "+pitchAngleValueText+",\n";
+			sendJSON += "  \"dummyLoad\": "+dummyLoadValueText+"\n";
 			sendJSON += "}";
 			
 			// console.log( "serialListener send JSON : \n"+sendJSON);	
