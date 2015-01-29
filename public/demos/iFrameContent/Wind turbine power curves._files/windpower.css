@@ -1,0 +1,213 @@
+HTML {
+	BORDER-RIGHT: 0px; PADDING-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px;
+      PADDING-BOTTOM: 0px; MARGIN: 0px;
+     BORDER-LEFT: 0px; MAX-HEIGHT: 100%; PADDING-TOP: 0px; BORDER-BOTTOM: 0px;
+      HEIGHT: 100%;
+       background-color:rgb(220,220,220);
+}
+BODY {
+	BORDER-RIGHT: 0px; PADDING-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px;
+     PADDING-BOTTOM: 0px; MARGIN: 0px; BORDER-LEFT: 0px; MAX-HEIGHT: 100%;
+      PADDING-TOP: 0px; BORDER-BOTTOM: 0px; HEIGHT: 100%;background-color: rgb(220,220,220);
+}
+#head {
+width:100%;
+height:102px;
+background:url("Website header2.jpg");
+border-bottom: #000099;
+  border-bottom-width: 2px
+}
+
+.nav {
+    text-align:left;
+}
+.nav .item1,
+.nav .item1:hover,
+.nav .item1-active,
+.nav .item1-active:hover {
+    padding: 2px 2px 2px 2px;
+    border: 1px #ffc425;
+    border-style: solid none solid;
+    text-decoration: none;
+    display: block;
+    position: relative;
+}
+.nav .item1 {
+    background: #FFF0CE;
+    color: #194179;
+}
+.nav .item1:hover,
+.nav .item1-active,
+.nav .item1-active:hover {
+    background: #FFC425;
+    color: #ffffff;
+}
+
+
+
+
+
+#wordsright {float:right; top:100px; height:120px; width:250px; background:#def; border:1px solid #000; margin:5px; padding:5px; font-size: 12px }
+
+
+#content
+{
+Z-INDEX: 3; RIGHT: 0px; BACKGROUND: rgb(220,220,220);   BOTTOM: 50px; top:0px;
+padding-left:10px;padding-right:10px; margin-right:0px;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 14px;
+text-align: left;
+display:block;
+float:right;
+PADDING-BOTTOM: 10px;
+POSITION:relative; overflow:auto;
+width:75%;
+}
+#content h1
+{
+FONT-SIZE: 18px;text-align: center;
+}
+#content h2
+{
+FONT-SIZE: 16px;text-align: center;
+}
+#content h4
+{
+FONT-SIZE: 18px;text-align: left;
+}
+#content h3
+{
+FONT-SIZE: 18px;text-align: center;
+}
+#left {
+DISPLAY: block;
+Z-INDEX: 4; BACKGROUND:  rgb(220,220,220) ; LEFT: 0px;
+ BOTTOM: 0px;float:left;
+FONT-SIZE:14px; BORDER-RIGHT: #000 1px ;BORDER-bottom: #000 1px;
+font-family: Arial, Helvetica, sans-serif; color:rgb(0,0,0);
+text-align: center;
+position: relative ;
+width:21%;
+height:1000px;
+}
+
+
+A.nav {
+DISPLAY: block; BACKGROUND: #bbb;
+MARGIN-LEFT: 2%;
+COLOR: rgb(28,16,116); LINE-HEIGHT: 15px;
+HEIGHT: auto; TEXT-ALIGN: left; TEXT-DECORATION: none;
+font-size:12px;
+padding-left: 10px;
+padding-top: 2px;
+padding-bottom: 2px;
+border: 1px solid ;
+border-color: rgb(28,16,116);
+width:93%;
+}
+A.nav:hover {
+	BACKGROUND: rgb(160,200,160); COLOR:  #000;
+}
+/*
+A.nav:visited {
+	BORDER-RIGHT: #000 1px solid; BORDER-TOP: #000 1px solid; DISPLAY: block; BACKGROUND: (175,175,185);
+    MARGIN-LEFT: 5px; BORDER-LEFT: #000 1px solid; WIDTH: 180px; COLOR: rgb(28,16,116); LINE-HEIGHT: 15px;
+    BORDER-BOTTOM: #000 1px solid; HEIGHT: auto; TEXT-ALIGN: left; TEXT-DECORATION: none;
+  padding-left: 3px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+*/
+A.nav1 {
+DISPLAY: block; BACKGROUND: rgb(255,175,175);
+MARGIN-LEFT: 2%;
+COLOR: rgb(28,16,116); LINE-HEIGHT: 15px;
+HEIGHT: auto; TEXT-ALIGN: left; TEXT-DECORATION: none;
+font-size:12px;
+padding-left: 10px;
+padding-top: 2px;
+padding-bottom: 2px;
+border: 1px solid ;
+border-color: rgb(28,16,116);
+width:93%;
+}
+A.nav1:hover {
+BACKGROUND: rgb(160,200,160); COLOR: #000;
+}
+A.nav2 {
+DISPLAY: block; BACKGROUND: rgb(128,255,255);
+MARGIN-LEFT: 2%;
+COLOR: rgb(28,16,116); LINE-HEIGHT: 15px;
+HEIGHT: auto; TEXT-ALIGN: left; TEXT-DECORATION: none;
+font-size:12px;
+padding-left: 10px;
+padding-top: 2px;
+padding-bottom: 2px;
+border: 1px solid ;
+border-color: rgb(28,16,116);
+width:93%;
+}
+A.nav2:hover {
+	BACKGROUND: rgb(160,200,160); COLOR: #000;
+}
+
+A.nav3
+{
+DISPLAY: block; BACKGROUND: rgb(150,255,150);
+MARGIN-LEFT: 2%; margin-top:30px;
+COLOR: rgb(28,16,116); LINE-HEIGHT: 25px;
+HEIGHT: auto; TEXT-ALIGN: left; TEXT-DECORATION: none;
+font-size:12px;
+padding-left: 10px;
+padding-top: 2px;
+padding-bottom: 2px;
+border: 1px solid ;
+border-color: rgb(28,16,116);
+width:93%;
+/*font-weight: bold;*/
+}
+A.nav3:hover {
+	BACKGROUND: rgb(160,200,160); COLOR: #000;
+}
+A.nav4
+{
+DISPLAY: block; BACKGROUND: rgb(250,100,75);
+COLOR: rgb(28,16,116); LINE-HEIGHT: 25px;
+HEIGHT: auto; TEXT-ALIGN: center; TEXT-DECORATION: none;
+font-size:12px;
+padding-left: 10px;
+padding-top: 2px;
+padding-bottom: 2px;
+border: 1px solid ;
+border-color: rgb(28,16,116);
+width:350px;
+
+font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif
+}
+A.nav4:hover {
+	BACKGROUND: rgb(160,200,160); COLOR: #000;
+}
+
+#footer
+{
+width:100%;
+padding-top: 15px;
+padding-bottom: 15px;text-align: center;
+font-size: 16px;
+background-color:rgb(120,200,120);
+clear: both;
+color:rgb(28,16,116);
+font-weight: bold
+}
+TABLE {
+	BORDER: black 1px solid; BORDER-COLLAPSE: collapse;
+  background: #FFFFFF
+}
+TD {
+	BORDER: black 1px solid; BORDER-COLLAPSE: collapse
+}
+TD {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; FONT-WEIGHT: bold; PADDING-BOTTOM: 5px;  PADDING-TOP: 5px
+}
+</STYLE>

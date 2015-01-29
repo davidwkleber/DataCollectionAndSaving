@@ -27,6 +27,7 @@ var dataItem;
 			var iosocket = io.connect('http://127.0.0.1:1337');
 
 	iosocket.on('connect', function (data) {
+		
 		console.log('guage client connected ');
 		console.log('guage connected data ' + data);
 
@@ -36,7 +37,7 @@ var dataItem;
 					dataItem = JSON.parse(data);
 		//			console.log('updateData current ' + dataItem.current);
 
-				var realRPM = Math.floor(((dataItem.rpm * 3.3)/1024)*1000); //*666.667);
+				// var realRPM = Math.floor(((dataItem.rpm * 3.3)/1024)*1000); //*666.667);
 			
 				updateGauge("current", dataItem.current);
 				updateGauge("voltage", dataItem.voltage);

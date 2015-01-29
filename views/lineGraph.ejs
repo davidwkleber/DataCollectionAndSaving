@@ -42,8 +42,13 @@
 	</form>
 	</fieldset>
 		<script>
-		console.log('what the f');
 		var dataSelected = 'power';
+		
+		var powerMin = 0; 
+		var powerMax = 3000;
+		var voltageMax = 15000;
+		var currentMax = 1000;
+		var rpmMax = 8000;
 		
 			$( ".dataSelectorRadio" ).on( "click", function() {
 
@@ -70,24 +75,24 @@
 					switch (dataSelected) {
 						case 'power':
 			//				console.log('graph power '+dataSelected);
-							tick( dataItem.power );
+							tick( dataItem.power, powerMax );
 							break;
 						case 'current':
 			//				console.log('graph current '+dataSelected);
-							tick( dataItem.current );
+							tick( dataItem.current, currentMax );
 							break;
 						case 'voltage':
 			//				console.log('graph voltage '+dataSelected);
-							tick( dataItem.voltage );
+							tick( dataItem.voltage, voltageMax );
 							break;
 						case 'rpm':
-							var realRPM = Math.floor(((dataItem.rpm * 3.3)/1024)*1000); //*666.667);
+							// var realRPM = Math.floor(((dataItem.rpm * 3.3)/1024)*1000); //*666.667);
 			//				console.log('graph rpm '+dataSelected);
-							tick( realRPM );
+							tick( dataItem.rpm, rpmMax );
 							break;
 						default:
 			//				console.log('graph default');
-							tick( dataItem.power );
+							tick( dataItem.power, powerMax );
 					}
 				 
 				});

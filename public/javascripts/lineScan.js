@@ -50,7 +50,7 @@ var path = svg.append("g")
  
 
  
-function tick( value ) {
+function tick( value, axisMax ) {
 
  // var y = d3.scale.linear()
   //  .domain([d3.min(data, function(d) {return d.value;}), d3.max(data, function(d) {return d.value;})])
@@ -62,13 +62,18 @@ function tick( value ) {
  if (value >= 0) {
   data.push(+value);
  
+/* this is for dynamic adjustment of y axis
 	var ymin = d3.min(data);
 	var ymax = d3.max(data);
 	var axisMargin = (ymax-ymin)/10;
 	var yminAxis = ymin - axisMargin;
 	if (yminAxis < 0) yminAxis = 0;
-	
+
   y.domain([yminAxis, ymax+axisMargin]);
+ */
+ 
+   y.domain([0, axisMax]);
+
  var newsvg = d3.select("#lineGraphDiv").transition();
  
  newsvg.select(".y.axis")

@@ -37,10 +37,14 @@ console.log('ports '+ portConfig.stepper.port +" "+ portConfig.windSpeed.port + 
 
 	DIserialPort = new SerialPort(portConfig.measurement.port, {
 		baudrate: portConfig.measurement.baudrate,
+		
 		parser: serialport.parsers.readline("EOL"),
 	}, function (err) {
 		if (err) console.log('Eroror opening measurement  port: ' +  portConfig.measurement.port);
 	});
+
+
+
 
 
 function sleep(time, callback) {
@@ -52,13 +56,13 @@ function sleep(time, callback) {
     callback();
 };
 
-var _comPort = '';
+
 
 var socketServer;
 var socketio = require('socket.io');
 socketServer = socketio.listen(app, true);
 
-function serialListener(ComPort)
+function serialListener()
 {	//
 	//
 	//http://www.barryvandam.com/node-js-communicating-with-arduino/ 
@@ -66,15 +70,13 @@ function serialListener(ComPort)
 	var receivedData = "";
     var sendData = "";
 	var delimiter = "\n";
-	var comPort = ComPort;
-	_comPort = comPort;
 	
- console.log('serialListenerInit called with comPort:'+comPort);
+ console.log('serialListenerInit called ');
 
 var io = require('socket.io').listen(1337);
 
 
-console.log('setup connection now');
+console.log('serialListener: setup connection now');
 
 io.sockets.on('connection', function(socket){
   console.log('a user connected');
@@ -100,6 +102,7 @@ io.sockets.on('connection', function(socket){
 
         sleep(2000, function() {
 		});
+		//asserting();
 	});
     WSserialPort.on("open", function () {
 		console.log('serialListener.WSserialPort.on Open ' + portConfig.windSpeed.port);
@@ -128,6 +131,7 @@ io.sockets.on('connection', function(socket){
 		console.log('serialListener.DLserialPort.on Open ' + portConfig.loadController.port);
         sleep(2000, function() {
 		});
+		
 	});
 	
   }); 
@@ -172,7 +176,7 @@ io.sockets.on('connection', function(socket){
 		var dummyLoadValueText = ((dummyLoadValue-1)/201)*100;
 		dummyLoadValueText =  +(Math.round(dummyLoadValueText +"e+1")+"e-1");
 		
-			//	console.log('SEND update data : '+sendData);
+			// console.log('SEND update data : '+sendData);
 			var sendJSON = '{\n  \"date\": \"'+formatNow+'\",';
 			sendJSON += sendData.substring(1, sendData.length-3);
 			sendJSON += ",\n  \"windSpeed\": "+windSpeedValueText+",\n";
@@ -252,4 +256,24 @@ serialListener.write = function( id, value ) {
 	
 
 };
+
+function asserting() {
+  console.log('asserting');
+	DIserialPort.set({rts:true, dtr:true}, function(err, something) {
+	  console.log('DLserialPort asserted');
+		setTimeout(clear, 250);
+	});
+}
+
+function clear() {
+	console.log('clearing');
+	DIserialPort.set({rts:false, dtr:false}, function(err, something) {
+	  console.log('DLserialPort clear');
+		setTimeout(done, 50);
+	});
+}
+
+function done() {
+	console.log("DLserialPort done resetting");
+}
 

@@ -4,7 +4,7 @@
 //
 var DIserialListener = require('../serialListener');
 
-DIserialListener('COM6');
+DIserialListener();
 
 
 var express = require('express');
@@ -17,7 +17,7 @@ var io = require('socket.io').listen(http);
 	
 httpServer.listen(3001);
 
-console.log('setup connection now');
+console.log('dataInput: setup connection now');
 
 io.on('connection', function(socket){
 
