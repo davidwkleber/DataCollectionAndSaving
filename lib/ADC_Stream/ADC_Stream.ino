@@ -52,7 +52,7 @@ unsigned long currTime1 = 0;
 unsigned long currTime2 = 0;
 unsigned long meassureTime = 0;
 
-static long buad = 9600;
+static long buad = 115200;
 
 
 

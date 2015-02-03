@@ -33,7 +33,7 @@ var dataItem;
 
 			jQuery(function ($) {
 				iosocket.on('updateData', function (data) {
-				//	console.log('update ' + data);
+					console.log('gauge update ' + data);
 					dataItem = JSON.parse(data);
 		//			console.log('updateData current ' + dataItem.current);
 
